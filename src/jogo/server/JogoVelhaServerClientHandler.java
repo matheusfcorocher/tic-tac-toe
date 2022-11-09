@@ -8,19 +8,19 @@ import jogo.lib.JogoVelhaServerMessage;
 public class JogoVelhaServerClientHandler extends Thread {
 
     private final JogoVelhaServerConnection client;
-    private final JogoVelhaServer caller;
+    private final JogoVelhaServer server;
 
-    public JogoVelhaServerClientHandler(JogoVelhaServerConnection client, JogoVelhaServer caller) throws IOException {
+    public JogoVelhaServerClientHandler(JogoVelhaServerConnection client, JogoVelhaServer server) throws IOException {
         this.client = client;
-        this.caller = caller;
+        this.server = server;
     }
 
     private void close() throws IOException {
-        this.caller.clientsHandler.remove(this.client);
+        this.server.clientsHandler.remove(this.client);
     }
 
     public synchronized void messageDispatcher(JogoVelhaServerMessage response) throws IOException {
-        List<JogoVelhaServerConnection> clients = this.caller.clientsHandler.getClients();
+        List<JogoVelhaServerConnection> clients = this.server.clientsHandler.getClients();
         for (JogoVelhaServerConnection cli : clients) {
             if (cli.getSocket() != null && cli.getSocket().isConnected() && cli.getOutput() != null) {
                 cli.getObjectOutputStream().writeObject(response);
@@ -34,7 +34,7 @@ public class JogoVelhaServerClientHandler extends Thread {
     public void run() {
         try {
             String message;
-            while (caller.isRunning) {
+            while (server.isRunning) {
                 if (this.client.getSocket().isConnected() && this.client.getInput() != null) {
                     message = this.client.getInput().readLine();
                 } else {
@@ -45,7 +45,7 @@ public class JogoVelhaServerClientHandler extends Thread {
                     break;
                 }
 
-                int p = caller.clientsHandler.getClients().indexOf(this.client);
+                int p = server.clientsHandler.getClients().indexOf(this.client);
 
                 System.out.println(String.valueOf(p));
                 if (p == -1) {
@@ -54,7 +54,7 @@ public class JogoVelhaServerClientHandler extends Thread {
 
                 int q = Integer.parseInt(message);
 
-                JogoVelhaServerMessage response = caller.game.execute(p, q);
+                JogoVelhaServerMessage response = server.game.execute(p, q);
                 this.messageDispatcher(response);
             }
             close();
