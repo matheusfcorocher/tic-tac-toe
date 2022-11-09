@@ -81,7 +81,6 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
         this.colorizeSquare(8, response.getQ8());
         this.colorizeSquare(9, response.getQ9());
         //PlayerColorTile.setBackground(color);
-
     }
 
     /**
@@ -408,8 +407,8 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
         try {
             String server = EIp.getText();
             int porta = Integer.parseInt(EPort.getText());
-            tcpClient = new JogoVelhaClient(server, porta, this);
-            tcpClient.start();
+            jogoVelhaClient = new JogoVelhaClient(server, porta, this);
+            jogoVelhaClient.start();
             BConnect.setEnabled(false);
             BDisconnect.setEnabled(true);
         } catch (Exception e) {
@@ -420,7 +419,7 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
 
     private void BDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BDisconnectActionPerformed
         try {
-            tcpClient.close();
+            jogoVelhaClient.close();
             BConnect.setEnabled(true);
             BDisconnect.setEnabled(false);
         } catch (IOException ex) {
@@ -431,47 +430,47 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
 
     private void Q1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q1MouseClicked
 //        if (Q1.getBackground() == new Color(204, 204, 204))
-        tcpClient.handler.sendMessage(1);
+        jogoVelhaClient.handler.sendMessage(1);
     }//GEN-LAST:event_Q1MouseClicked
 
     private void Q7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q7MouseClicked
 //        if (Q7.getBackground() == new Color(204, 204, 204))
-        tcpClient.handler.sendMessage(7);
+        jogoVelhaClient.handler.sendMessage(7);
     }//GEN-LAST:event_Q7MouseClicked
 
     private void Q8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q8MouseClicked
 //        if (Q8.getBackground() == new Color(204, 204, 204))
-        tcpClient.handler.sendMessage(8);
+        jogoVelhaClient.handler.sendMessage(8);
     }//GEN-LAST:event_Q8MouseClicked
 
     private void Q9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q9MouseClicked
 //        if (Q9.getBackground() == new Color(204, 204, 204))
-        tcpClient.handler.sendMessage(9);
+        jogoVelhaClient.handler.sendMessage(9);
     }//GEN-LAST:event_Q9MouseClicked
 
     private void Q6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q6MouseClicked
 //        if (Q6.getBackground() == new Color(204, 204, 204))
-        tcpClient.handler.sendMessage(6);
+        jogoVelhaClient.handler.sendMessage(6);
     }//GEN-LAST:event_Q6MouseClicked
 
     private void Q5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q5MouseClicked
 //        if (Q5.getBackground() == new Color(204, 204, 204))
-        tcpClient.handler.sendMessage(5);
+        jogoVelhaClient.handler.sendMessage(5);
     }//GEN-LAST:event_Q5MouseClicked
 
     private void Q4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q4MouseClicked
 //        if (Q4.getBackground() == new Color(204, 204, 204))
-        tcpClient.handler.sendMessage(4);
+        jogoVelhaClient.handler.sendMessage(4);
     }//GEN-LAST:event_Q4MouseClicked
 
     private void Q3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q3MouseClicked
 //        if (Q3.getBackground() == new Color(204, 204, 204))
-        tcpClient.handler.sendMessage(3);
+        jogoVelhaClient.handler.sendMessage(3);
     }//GEN-LAST:event_Q3MouseClicked
 
     private void Q2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q2MouseClicked
 //        if (Q2.getBackground() == new Color(204, 204, 204))
-        tcpClient.handler.sendMessage(2);
+        jogoVelhaClient.handler.sendMessage(2);
     }//GEN-LAST:event_Q2MouseClicked
 
     /**
@@ -501,5 +500,5 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
-    private JogoVelhaClient tcpClient;
+    private JogoVelhaClient jogoVelhaClient;
 }
