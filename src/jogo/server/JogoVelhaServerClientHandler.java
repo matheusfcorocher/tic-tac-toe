@@ -9,25 +9,16 @@ public class JogoVelhaServerClientHandler extends Thread {
 
     private final JogoVelhaServerConnection client;
     private final JogoVelhaServer server;
+    private final JogoVelhaServerDispatcher dispatcher;
 
     public JogoVelhaServerClientHandler(JogoVelhaServerConnection client, JogoVelhaServer server) throws IOException {
         this.client = client;
         this.server = server;
+        this.dispatcher = new JogoVelhaServerDispatcher(this.server.clientsHandler);
     }
 
     private void close() throws IOException {
         this.server.clientsHandler.remove(this.client);
-    }
-
-    public synchronized void messageDispatcher(JogoVelhaServerMessage response) throws IOException {
-        List<JogoVelhaServerConnection> clients = this.server.clientsHandler.getClients();
-        for (JogoVelhaServerConnection cli : clients) {
-            if (cli.getSocket() != null && cli.getSocket().isConnected() && cli.getOutput() != null) {
-                cli.getObjectOutputStream().writeObject(response);
-                cli.getObjectOutputStream().flush();
-            }
-        }
-        System.out.println("Dispatch message to clients");
     }
 
     @Override
@@ -55,7 +46,7 @@ public class JogoVelhaServerClientHandler extends Thread {
                 int q = Integer.parseInt(message);
 
                 JogoVelhaServerMessage response = server.game.execute(p, q);
-                this.messageDispatcher(response);
+                this.dispatcher.dispatchMessageToAllClients(response);
             }
             close();
         } catch (IOException | NumberFormatException ex) {
