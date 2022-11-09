@@ -21,11 +21,11 @@ public class JogoVelhaServerHandler extends Thread {
     }
 
     private void encerrar() {
-        this.caller.removerCliente(this.cliente);
+        this.caller.clientsHandler.removerCliente(this.cliente);
     }
 
     public synchronized void messageDispatcher(JogoVelhaServerMessage response) throws IOException {
-        List<JogoVelhaServerConnection> clientes = this.caller.getClientes();
+        List<JogoVelhaServerConnection> clientes = this.caller.clientsHandler.getClientes();
         for (JogoVelhaServerConnection cli : clientes) {
             if (cli.getSocket() != null && cli.getSocket().isConnected() && cli.getOutput() != null) {
                 cli.getObjectOutputStream().writeObject(response);
@@ -50,7 +50,7 @@ public class JogoVelhaServerHandler extends Thread {
                     break;
                 }
 
-                int p = caller.clientes.indexOf(this.cliente);
+                int p = caller.clientsHandler.getClientes().indexOf(this.cliente);
 
                 System.out.println(String.valueOf(p));
                 if (p == -1) {
