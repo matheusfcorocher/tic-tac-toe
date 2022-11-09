@@ -11,7 +11,7 @@ public class JogoVelhaClient extends Thread {
     protected final JogoVelhaClientConnection clientConnection;
     private JogoVelhaClientListener listener;
     public JogoVelhaClientHandler handler;
-    private boolean isRunning;
+    private volatile boolean isRunning;
 
     public JogoVelhaClient(String serverAddress, int serverPort, JogoVelhaClientView view) throws IOException {
         this.view = view;
@@ -27,14 +27,15 @@ public class JogoVelhaClient extends Thread {
                 this.listener = new JogoVelhaClientListener(this.clientConnection);
                 Thread thread = new Thread(this.listener);
                 thread.start();
-                thread.join();
+                thread.join(); // waits for thread be resolved
                 JogoVelhaServerMessage response = this.listener.getResponse();
                 this.view.updateView(response);
             }
         } catch (IOException ex) {
             Logger.getLogger(JogoVelhaClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
-            Logger.getLogger(JogoVelhaClient.class.getName()).log(Level.SEVERE, null, ex);
+            Thread.currentThread().interrupt();//interrupt listener thread
+            return;
         }
 
     }
@@ -42,7 +43,7 @@ public class JogoVelhaClient extends Thread {
     public void close() throws IOException {
         this.isRunning = false;
         this.clientConnection.closeConnection();
-        this.interrupt();
+        this.interrupt(); //stop main thread
     }
 
     @Override
