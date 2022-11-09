@@ -8,18 +8,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JogoVelhaServer extends Thread {
-
-    private final ServerSocket server;
+    
+    protected JogoVelhaServerHandler serverHandler;
     protected JogoVelhaServerClientsHandler clientsHandler;
     protected final JogoVelha game;
     protected volatile boolean isRunning;
 
-    public JogoVelhaServer(int porta) throws IOException {
+    public JogoVelhaServer(int port) throws IOException {
         this.game = new JogoVelha(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-        this.server = new ServerSocket(porta);
         this.clientsHandler = new JogoVelhaServerClientsHandler();
+        this.serverHandler = new JogoVelhaServerHandler();
+        this.serverHandler.create(port);
         this.isRunning = true;
-        System.out.println("Server is running on port: " + server.getLocalPort());
+        System.out.println("Server is running on port: " + serverHandler.getServer().getLocalPort());
     }
 
     @Override
@@ -27,10 +28,10 @@ public class JogoVelhaServer extends Thread {
         while (this.isRunning) {
             try {
                 Socket socket;
-                socket = this.server.accept();
+                socket = this.serverHandler.acceptClient();
                 JogoVelhaServerConnection cliente = new JogoVelhaServerConnection(socket);
                 this.clientsHandler.novoCliente(cliente);
-                (new JogoVelhaServerHandler(cliente, this)).start();
+                (new JogoVelhaServerClientHandler(cliente, this)).start();
             } catch (IOException ex) {
                 if (ex.getMessage().contentEquals("Socket closed")) {
 
@@ -49,7 +50,7 @@ public class JogoVelhaServer extends Thread {
     protected synchronized void finalize() throws Throwable {
         try {
             this.isRunning = false;
-            this.server.close();
+            this.serverHandler.close();
             System.out.println("Server stopped to run.");
         } finally {
             super.finalize();

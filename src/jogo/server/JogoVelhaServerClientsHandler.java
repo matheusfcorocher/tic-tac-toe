@@ -25,7 +25,7 @@ public class JogoVelhaServerClientsHandler {
     public List getClientes() {
         return this.clientes;
     }
-
+    
     public synchronized void novoCliente(JogoVelhaServerConnection cliente) throws IOException {
         if (this.clientes.size() <= 2) {
             this.clientes.add(cliente);

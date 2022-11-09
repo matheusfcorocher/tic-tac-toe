@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 public class JogoVelhaServerConnection {
@@ -16,23 +17,12 @@ public class JogoVelhaServerConnection {
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
 
-    public JogoVelhaServerConnection(Socket socket) {
+    public JogoVelhaServerConnection(Socket socket) throws IOException {
         this.socket = socket;
-        try {
-            this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.output = new PrintWriter(this.socket.getOutputStream(), true);
-            this.objectOutputStream = new ObjectOutputStream(this.socket.getOutputStream());
-            this.objectInputStream = new ObjectInputStream(this.socket.getInputStream());
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        this.input.close();
-        this.output.close();
-        this.socket.close();
+        this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.output = new PrintWriter(this.socket.getOutputStream(), true);
+        this.objectOutputStream = new ObjectOutputStream(this.socket.getOutputStream());
+        this.objectInputStream = new ObjectInputStream(this.socket.getInputStream());
     }
 
     public Socket getSocket() {
@@ -46,12 +36,19 @@ public class JogoVelhaServerConnection {
     public PrintWriter getOutput() {
         return this.output;
     }
-    
+
     public ObjectInputStream getObjectInputStream() {
         return this.objectInputStream;
     }
-    
+
     public ObjectOutputStream getObjectOutputStream() {
         return this.objectOutputStream;
+    }
+    
+    @Override
+    protected void finalize() throws Throwable {
+        this.input.close();
+        this.output.close();
+        this.socket.close();
     }
 }
