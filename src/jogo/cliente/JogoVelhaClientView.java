@@ -11,15 +11,20 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
     public JogoVelhaClientView() {
         initComponents();
     }
-
-    private void colorizeSquare(Integer q, Integer p) {
-        Color color = new Color(204, 204, 204);
+    
+    private Color getColorByPlayer(Integer p) {
+        Color color = new Color(204, 204, 204);//standard square color(gray) 
         if (p == 1) {
             color = Color.GREEN;
         } else if (p == 2) {
             color = Color.RED;
         }
         
+        return color;
+    }
+
+    private void colorizeSquare(Integer q, Integer p) {
+        Color color = this.getColorByPlayer(p);
         PlayerColorTile.setBackground(color);
         
         switch (q) {
