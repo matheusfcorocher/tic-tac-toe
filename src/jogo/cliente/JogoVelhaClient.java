@@ -7,14 +7,16 @@ import jogo.lib.JogoVelhaServerMessage;
 
 public class JogoVelhaClient extends Thread {
 
-    private JogoVelhaClientListener listener;
-    public final JogoVelhaClientConnection clientConnection;
     private final JogoVelhaClientView view;
+    protected final JogoVelhaClientConnection clientConnection;
+    private JogoVelhaClientListener listener;
+    public JogoVelhaClientHandler handler;
     private boolean isRunning;
 
     public JogoVelhaClient(String serverAddress, int serverPort, JogoVelhaClientView view) throws IOException {
         this.view = view;
         this.clientConnection = new JogoVelhaClientConnection(serverAddress, serverPort);
+        this.handler = new JogoVelhaClientHandler(this.clientConnection);
         this.isRunning = true;
     }
 
