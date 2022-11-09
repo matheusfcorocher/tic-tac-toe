@@ -35,12 +35,7 @@ public class JogoVelhaServerClientHandler extends Thread {
                 }
 
                 int p = server.clientsHandler.getClients().indexOf(this.client);
-
                 System.out.println(String.valueOf(p));
-                if (p == -1) {
-                    break;
-                }
-
                 int q = Integer.parseInt(message);
 
                 JogoVelhaServerMessage response = server.game.execute(p, q);
