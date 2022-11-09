@@ -26,27 +26,20 @@ public class JogoVelhaServerClientHandler extends Thread {
             while (server.isRunning) {
                 if (this.client.isConnected() && this.client.isInputStreamNotEmpty()) {
                     message = this.client.readMessage();
-                } else {
-                    break;
+                  
+                    int p = server.clientsHandler.getClients().indexOf(this.client);
+                    int q = Integer.parseInt(message);
+                    
+                    JogoVelhaServerMessage response = server.game.execute(p, q);
+                    this.dispatcher.dispatchMessageToAllClients(response);
                 }
-
-                if (message == null || message.equals("")) {
-                    break;
-                }
-
-                int p = server.clientsHandler.getClients().indexOf(this.client);
-                System.out.println(String.valueOf(p));
-                int q = Integer.parseInt(message);
-
-                JogoVelhaServerMessage response = server.game.execute(p, q);
-                this.dispatcher.dispatchMessageToAllClients(response);
             }
             close();
         } catch (IOException | NumberFormatException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     @Override
     protected void finalize() throws Throwable {
         close();
