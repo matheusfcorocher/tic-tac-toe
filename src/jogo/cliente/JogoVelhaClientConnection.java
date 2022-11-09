@@ -17,10 +17,10 @@ import jogo.lib.JogoVelhaServerMessage;
  */
 public class JogoVelhaClientConnection {
 
-    protected Socket socket;
+    private Socket socket;
     private PrintWriter output;
-    protected ObjectOutputStream objectOutputStream;
-    protected ObjectInputStream objectInputStream;
+    private ObjectOutputStream objectOutputStream;
+    private ObjectInputStream objectInputStream;
 
     public JogoVelhaClientConnection(String serverAddress, int serverPort) throws IOException {
         this.socket = new Socket(serverAddress, serverPort);
@@ -52,6 +52,18 @@ public class JogoVelhaClientConnection {
 
     public void sendObject(JogoVelhaServerMessage message) throws IOException {
         this.objectOutputStream.writeObject(message);
+    }
+    
+    public boolean isConnected() {
+        return this.socket.isConnected();
+    }
+    
+    public boolean isInputStreamNotEmpty() {
+        return this.objectInputStream != null;
+    }
+    
+    public Object readMessage() throws IOException, ClassNotFoundException {
+        return this.objectInputStream.readObject();
     }
 
     @Override

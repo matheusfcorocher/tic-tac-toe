@@ -17,8 +17,8 @@ public class JogoVelhaClientListener implements Runnable {
     @Override
     public void run() {
         try {
-            if (this.clientConnection.socket.isConnected() && this.clientConnection.objectInputStream != null) {
-                this.response = (JogoVelhaServerMessage) this.clientConnection.objectInputStream.readObject();
+            if (this.clientConnection.isConnected() && this.clientConnection.isInputStreamNotEmpty()) {
+                this.response = (JogoVelhaServerMessage) this.clientConnection.readMessage();
             }
         } catch (IOException ex) {
             Logger.getLogger(JogoVelhaClientListener.class.getName()).log(Level.SEVERE, null, ex);
