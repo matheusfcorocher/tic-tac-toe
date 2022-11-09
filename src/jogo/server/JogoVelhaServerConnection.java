@@ -11,11 +11,11 @@ import java.net.Socket;
 
 public class JogoVelhaServerConnection {
 
-    private Socket socket;
-    private BufferedReader input;
-    private PrintWriter output;
-    private ObjectInputStream objectInputStream;
-    private ObjectOutputStream objectOutputStream;
+    private final Socket socket;
+    private final BufferedReader input;
+    private final PrintWriter output;
+    private final ObjectInputStream objectInputStream;
+    private final ObjectOutputStream objectOutputStream;
 
     public JogoVelhaServerConnection(Socket socket) throws IOException {
         this.socket = socket;
@@ -44,11 +44,15 @@ public class JogoVelhaServerConnection {
     public ObjectOutputStream getObjectOutputStream() {
         return this.objectOutputStream;
     }
-    
-    @Override
-    protected void finalize() throws Throwable {
+
+    public void closeConnection() throws IOException {
         this.input.close();
         this.output.close();
         this.socket.close();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        this.closeConnection();
     }
 }

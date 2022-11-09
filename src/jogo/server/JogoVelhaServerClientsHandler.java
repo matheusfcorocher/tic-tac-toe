@@ -9,51 +9,39 @@ import jogo.lib.ClientMaximumLimitException;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 /**
  *
  * @author matheus
  */
 public class JogoVelhaServerClientsHandler {
-    
-    protected final List<JogoVelhaServerConnection> clientes;
+
+    protected final List<JogoVelhaServerConnection> clients;
 
     public JogoVelhaServerClientsHandler() {
-        this.clientes = new ArrayList<>();
-    }
-    
-    public List getClientes() {
-        return this.clientes;
-    }
-    
-    public synchronized void novoCliente(JogoVelhaServerConnection cliente) throws IOException {
-        if (this.clientes.size() <= 2) {
-            this.clientes.add(cliente);
-        } else {
-            ClientMaximumLimitException error = new ClientMaximumLimitException();
-            cliente.getObjectOutputStream().writeObject(error);
-        }
+        this.clients = new ArrayList<>();
     }
 
-    public synchronized void removerCliente(JogoVelhaServerConnection cliente) {
-        this.clientes.remove(cliente);
-        try {
-            cliente.getInput().close();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-        cliente.getOutput().close();
-        try {
-            cliente.getSocket().close();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+    public List getClients() {
+        return this.clients;
     }
 
-    public synchronized void removeAllClients() {
-        for (JogoVelhaServerConnection cli : this.clientes) {
+    public boolean isClientsFull() {
+        return clients.size() <= 2;
+    }
+
+    public synchronized void add(JogoVelhaServerConnection client) {
+        this.clients.add(client);
+    }
+
+    public synchronized void remove(JogoVelhaServerConnection client) throws IOException {
+        this.clients.remove(client);
+        client.closeConnection();
+    }
+
+    public synchronized void removeAllClients() throws IOException {
+        for (JogoVelhaServerConnection cli : this.clients) {
             if (cli.getSocket() != null && cli.getSocket().isConnected() && cli.getOutput() != null) {
-                this.removerCliente(cli);
+                this.remove(cli);
             }
         }
     }

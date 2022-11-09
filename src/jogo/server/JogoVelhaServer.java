@@ -1,14 +1,12 @@
 package jogo.server;
 
 import java.io.IOException;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JogoVelhaServer extends Thread {
-    
+
     protected JogoVelhaServerHandler serverHandler;
     protected JogoVelhaServerClientsHandler clientsHandler;
     protected final JogoVelha game;
@@ -27,11 +25,13 @@ public class JogoVelhaServer extends Thread {
     public void run() {
         while (this.isRunning) {
             try {
-                Socket socket;
-                socket = this.serverHandler.acceptClient();
-                JogoVelhaServerConnection cliente = new JogoVelhaServerConnection(socket);
-                this.clientsHandler.novoCliente(cliente);
-                (new JogoVelhaServerClientHandler(cliente, this)).start();
+                if (this.clientsHandler.isClientsFull()) {
+                    Socket socket;
+                    socket = this.serverHandler.acceptClient();
+                    JogoVelhaServerConnection client = new JogoVelhaServerConnection(socket);
+                    this.clientsHandler.add(client);
+                    (new JogoVelhaServerClientHandler(client, this)).start();
+                }
             } catch (IOException ex) {
                 if (ex.getMessage().contentEquals("Socket closed")) {
 

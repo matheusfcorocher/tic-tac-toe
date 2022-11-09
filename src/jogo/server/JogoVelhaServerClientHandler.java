@@ -7,41 +7,36 @@ import jogo.lib.JogoVelhaServerMessage;
 
 public class JogoVelhaServerClientHandler extends Thread {
 
-    private final JogoVelhaServerConnection cliente;
+    private final JogoVelhaServerConnection client;
     private final JogoVelhaServer caller;
 
-    public JogoVelhaServerClientHandler(JogoVelhaServerConnection cliente, JogoVelhaServer caller) throws IOException {
-        this.cliente = cliente;
+    public JogoVelhaServerClientHandler(JogoVelhaServerConnection client, JogoVelhaServer caller) throws IOException {
+        this.client = client;
         this.caller = caller;
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        encerrar();
-    }
-
-    private void encerrar() {
-        this.caller.clientsHandler.removerCliente(this.cliente);
+    private void close() throws IOException {
+        this.caller.clientsHandler.remove(this.client);
     }
 
     public synchronized void messageDispatcher(JogoVelhaServerMessage response) throws IOException {
-        List<JogoVelhaServerConnection> clientes = this.caller.clientsHandler.getClientes();
-        for (JogoVelhaServerConnection cli : clientes) {
+        List<JogoVelhaServerConnection> clients = this.caller.clientsHandler.getClients();
+        for (JogoVelhaServerConnection cli : clients) {
             if (cli.getSocket() != null && cli.getSocket().isConnected() && cli.getOutput() != null) {
                 cli.getObjectOutputStream().writeObject(response);
                 cli.getObjectOutputStream().flush();
-                System.out.println("Dispatch message to client");
             }
         }
+        System.out.println("Dispatch message to clients");
     }
 
     @Override
     public void run() {
-        String message;
-        while (caller.isRunning) {
-            try {
-                if (this.cliente.getSocket().isConnected() && this.cliente.getInput() != null) {
-                    message = this.cliente.getInput().readLine();
+        try {
+            String message;
+            while (caller.isRunning) {
+                if (this.client.getSocket().isConnected() && this.client.getInput() != null) {
+                    message = this.client.getInput().readLine();
                 } else {
                     break;
                 }
@@ -50,7 +45,7 @@ public class JogoVelhaServerClientHandler extends Thread {
                     break;
                 }
 
-                int p = caller.clientsHandler.getClientes().indexOf(this.cliente);
+                int p = caller.clientsHandler.getClients().indexOf(this.client);
 
                 System.out.println(String.valueOf(p));
                 if (p == -1) {
@@ -58,14 +53,18 @@ public class JogoVelhaServerClientHandler extends Thread {
                 }
 
                 int q = Integer.parseInt(message);
-                
+
                 JogoVelhaServerMessage response = caller.game.execute(p, q);
                 this.messageDispatcher(response);
-            } catch (IOException | NumberFormatException ex) {
-                System.out.println(ex.getMessage());
-                break;
             }
+            close();
+        } catch (IOException | NumberFormatException ex) {
+            System.out.println(ex.getMessage());
         }
-        encerrar();
+    }
+    
+    @Override
+    protected void finalize() throws Throwable {
+        close();
     }
 }
