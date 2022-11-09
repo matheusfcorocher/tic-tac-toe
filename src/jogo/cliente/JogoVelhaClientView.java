@@ -24,9 +24,7 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
     }
 
     private void colorizeSquare(Integer q, Integer p) {
-        Color color = this.getColorByPlayer(p);
-        PlayerColorTile.setBackground(color);
-        
+        Color color = this.getColorByPlayer(p);        
         switch (q) {
             case 1:
                 Q1.setBackground(color);
@@ -82,6 +80,8 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
         this.colorizeSquare(7, response.getQ7());
         this.colorizeSquare(8, response.getQ8());
         this.colorizeSquare(9, response.getQ9());
+        //PlayerColorTile.setBackground(color);
+
     }
 
     /**
