@@ -1,8 +1,6 @@
 package jogo.server;
 
-import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.List;
 import jogo.lib.JogoVelhaServerMessage;
 
 public class JogoVelhaServerClientHandler extends Thread {
@@ -26,8 +24,8 @@ public class JogoVelhaServerClientHandler extends Thread {
         try {
             String message;
             while (server.isRunning) {
-                if (this.client.getSocket().isConnected() && this.client.getInput() != null) {
-                    message = this.client.getInput().readLine();
+                if (this.client.isConnected() && this.client.isInputStreamNotEmpty()) {
+                    message = this.client.readMessage();
                 } else {
                     break;
                 }

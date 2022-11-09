@@ -44,7 +44,19 @@ public class JogoVelhaServerConnection {
     public ObjectOutputStream getObjectOutputStream() {
         return this.objectOutputStream;
     }
-
+    
+    public boolean isConnected() {
+        return this.socket.isConnected();
+    }
+    
+    public boolean isInputStreamNotEmpty() {
+        return this.input != null;
+    }
+    
+    public String readMessage() throws IOException {
+        return this.input.readLine();
+    }
+                    
     public void closeConnection() throws IOException {
         this.input.close();
         this.output.close();
