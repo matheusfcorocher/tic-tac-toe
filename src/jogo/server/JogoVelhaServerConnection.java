@@ -49,8 +49,16 @@ public class JogoVelhaServerConnection {
         return this.socket.isConnected();
     }
     
+    public boolean isSocketNotEmpty() {
+        return this.socket != null;
+    }
+    
     public boolean isInputStreamNotEmpty() {
         return this.input != null;
+    }
+    
+    public boolean isOutputStreamNotEmpty() {
+        return this.objectOutputStream != null;
     }
     
     public String readMessage() throws IOException {

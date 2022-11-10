@@ -23,12 +23,11 @@ public class JogoVelhaServerDispatcher {
     public synchronized void dispatchMessageToAllClients(JogoVelhaServerMessage response) throws IOException {
         List<JogoVelhaServerConnection> clients = clientsHandler.getClients();
         for (JogoVelhaServerConnection cli : clients) {
-            if (cli.getSocket() != null && cli.getSocket().isConnected() && cli.getOutput() != null) {
+            if (cli.isSocketNotEmpty() && cli.isConnected() && cli.isOutputStreamNotEmpty()) {
                 cli.getObjectOutputStream().writeObject(response);
                 cli.getObjectOutputStream().flush();
             }
         }
         System.out.println("Dispatch message to clients");
-    }
-    
+    }  
 }
