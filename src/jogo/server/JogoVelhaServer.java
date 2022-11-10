@@ -1,4 +1,4 @@
-package jogo.server;
+    package jogo.server;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -47,6 +47,11 @@ public class JogoVelhaServer extends Thread {
 
     public void startGame(JogoVelhaServerConnection client) {
         new Thread(() -> {
+            try {
+                this.dispatcher.dispatchMessageToClient(client, this.game.getBoardStatus());
+            } catch (IOException ex) {
+                Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex);
+            }
             try {
                 while (this.isRunning) {
                     JogoVelhaServerListener serverListener = new JogoVelhaServerListener(client);

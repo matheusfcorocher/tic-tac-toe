@@ -13,13 +13,13 @@ import jogo.lib.JogoVelhaServerMessage;
  * @author matheus
  */
 public class JogoVelhaServerDispatcher {
-    
+
     protected JogoVelhaServerClientsHandler clientsHandler;
 
-    public JogoVelhaServerDispatcher(JogoVelhaServerClientsHandler clientsHandler ) {
+    public JogoVelhaServerDispatcher(JogoVelhaServerClientsHandler clientsHandler) {
         this.clientsHandler = clientsHandler;
     }
-    
+
     public synchronized void dispatchMessageToAllClients(JogoVelhaServerMessage response) throws IOException {
         List<JogoVelhaServerConnection> clients = clientsHandler.getClients();
         for (JogoVelhaServerConnection cli : clients) {
@@ -29,5 +29,13 @@ public class JogoVelhaServerDispatcher {
             }
         }
         System.out.println("Dispatch message to clients");
-    }  
+    }
+
+    public synchronized void dispatchMessageToClient(JogoVelhaServerConnection client, JogoVelhaServerMessage response) throws IOException {
+        if (client.isSocketNotEmpty() && client.isConnected() && client.isOutputStreamNotEmpty()) {
+            client.getObjectOutputStream().writeObject(response);
+            client.getObjectOutputStream().flush();
+        }
+        System.out.println("Dispatch message to client");
+    }
 }

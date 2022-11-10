@@ -124,7 +124,7 @@ public class JogoVelha {
         return winner != 0;
     }
 
-    private JogoVelhaServerMessage getBoardStatus() {
+    protected JogoVelhaServerMessage getBoardStatus() {
         return new JogoVelhaServerMessage(this.q1, this.q2, this.q3,
                 this.q4, this.q5, this.q6,
                 this.q7, this.q8, this.q9);
