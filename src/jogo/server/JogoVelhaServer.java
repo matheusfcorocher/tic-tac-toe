@@ -49,14 +49,17 @@ public class JogoVelhaServer extends Thread {
         new Thread(() -> {
             try {
                 while (this.isRunning) {
-                    JogoVelhaServerClientListener clientListener = new JogoVelhaServerClientListener(client);
-                    Thread thread = new Thread(clientListener);
+                    JogoVelhaServerListener serverListener = new JogoVelhaServerListener(client);
+                    Thread thread = new Thread(serverListener);
                     thread.start();
                     thread.join(); //waits for thread be resolved
 
-                    String request = clientListener.getRequest();
-                    int p = this.clientsHandler.getClients().indexOf(client);
+                    String request = serverListener.getRequest();
+                    if (request == null || request.equals("")) {
+                        break;
+                    }
                     int q = Integer.parseInt(request);
+                    int p = this.clientsHandler.getClients().indexOf(client);
 
                     JogoVelhaServerMessage response = this.game.execute(p, q);
                     this.dispatcher.dispatchMessageToAllClients(response);
