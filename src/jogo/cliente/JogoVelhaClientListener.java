@@ -21,7 +21,11 @@ public class JogoVelhaClientListener implements Runnable {
                 this.response = (JogoVelhaServerMessage) this.clientConnection.readMessage();
             }
         } catch (IOException ex) {
-            Logger.getLogger(JogoVelhaClientListener.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                this.clientConnection.closeConnection();
+            } catch (IOException ex1) {
+                Logger.getLogger(JogoVelhaClientListener.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(JogoVelhaClientListener.class.getName()).log(Level.SEVERE, null, ex);
         }

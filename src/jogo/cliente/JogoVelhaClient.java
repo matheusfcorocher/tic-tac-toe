@@ -37,7 +37,6 @@ public class JogoVelhaClient extends Thread {
             Thread.currentThread().interrupt();//interrupt listener thread
             return;
         }
-
     }
 
     public void close() throws IOException {
