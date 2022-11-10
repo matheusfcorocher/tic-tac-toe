@@ -25,7 +25,7 @@ public class JogoVelhaServer extends Thread {
     public void run() {
         while (this.isRunning) {
             try {
-                if (this.clientsHandler.isClientsFull()) {
+                if (this.clientsHandler.isClientsNotFull()) {
                     Socket socket;
                     socket = this.serverHandler.acceptClient();
                     JogoVelhaServerConnection client = new JogoVelhaServerConnection(socket);
@@ -41,7 +41,7 @@ public class JogoVelhaServer extends Thread {
             }
         }
     }
-
+    
     public synchronized void finish() throws Throwable {
         this.finalize();
     }

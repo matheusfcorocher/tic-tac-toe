@@ -25,7 +25,7 @@ public class JogoVelhaServerClientsHandler {
         return this.clients;
     }
 
-    public boolean isClientsFull() {
+    public boolean isClientsNotFull() {
         return clients.size() <= 2;
     }
 
