@@ -45,4 +45,8 @@ public class JogoVelhaServerClientsHandler {
             }
         }
     }
+    
+    public int getClientPosition(JogoVelhaServerConnection client) {
+        return this.getClients().indexOf(client) + 1;
+    }
 }

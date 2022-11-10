@@ -23,19 +23,17 @@ public class JogoVelhaServerDispatcher {
     public synchronized void dispatchMessageToAllClients(JogoVelhaServerMessage response) throws IOException {
         List<JogoVelhaServerConnection> clients = clientsHandler.getClients();
         for (JogoVelhaServerConnection cli : clients) {
-            if (cli.isSocketNotEmpty() && cli.isConnected() && cli.isOutputStreamNotEmpty()) {
-                cli.getObjectOutputStream().writeObject(response);
-                cli.getObjectOutputStream().flush();
-            }
+            this.dispatchMessageToClient(cli, response);
         }
         System.out.println("Dispatch message to clients");
     }
 
     public synchronized void dispatchMessageToClient(JogoVelhaServerConnection client, JogoVelhaServerMessage response) throws IOException {
+        int p = this.clientsHandler.getClientPosition(client);
+        response.setPlayer(p);
         if (client.isSocketNotEmpty() && client.isConnected() && client.isOutputStreamNotEmpty()) {
             client.getObjectOutputStream().writeObject(response);
             client.getObjectOutputStream().flush();
         }
-        System.out.println("Dispatch message to client");
     }
 }

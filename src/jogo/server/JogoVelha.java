@@ -16,17 +16,17 @@ public class JogoVelha {
     protected int q1, q2, q3, q4, q5, q6, q7, q8, q9;
     protected boolean isGameOver;
 
-    public JogoVelha(int turn, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9) {
-        this.turn = turn;
-        this.q1 = q1;
-        this.q2 = q2;
-        this.q3 = q3;
-        this.q4 = q4;
-        this.q5 = q5;
-        this.q6 = q6;
-        this.q7 = q7;
-        this.q8 = q8;
-        this.q9 = q9;
+    public JogoVelha() {
+        this.turn = 1;
+        this.q1 = 0;
+        this.q2 = 0;
+        this.q3 = 0;
+        this.q4 = 0;
+        this.q5 = 0;
+        this.q6 = 0;
+        this.q7 = 0;
+        this.q8 = 0;
+        this.q9 = 0;
         this.isGameOver = false;
     }
 
@@ -45,7 +45,7 @@ public class JogoVelha {
             }
         }
 
-        return this.getBoardStatus();
+        return this.getGameStatus();
     }
 
     private boolean isYourTurn(int player) {
@@ -57,15 +57,14 @@ public class JogoVelha {
     }
 
     private void resetTurn() {
-        this.turn = 0;
+        this.turn = 1;
     }
 
     private boolean shouldResetTurn() {
-        return this.turn >= 2;
+        return this.turn == 3;
     }
 
     private void setSquareColor(int player, int square) {
-        player += 1;
         switch (square) {
             case 1:
                 this.q1 = player;
@@ -124,8 +123,8 @@ public class JogoVelha {
         return winner != 0;
     }
 
-    protected JogoVelhaServerMessage getBoardStatus() {
-        return new JogoVelhaServerMessage(this.q1, this.q2, this.q3,
+    protected JogoVelhaServerMessage getGameStatus() {
+        return new JogoVelhaServerMessage(this.turn, this.q1, this.q2, this.q3,
                 this.q4, this.q5, this.q6,
                 this.q7, this.q8, this.q9);
     }

@@ -11,9 +11,12 @@ import java.io.Serializable;
  * @author matheus
  */
 public class JogoVelhaServerMessage implements Serializable {
-    protected int q1, q2, q3, q4, q5, q6, q7, q8, q9;
+    private int player;
+    private int turn;
+    private int q1, q2, q3, q4, q5, q6, q7, q8, q9;
 
-    public JogoVelhaServerMessage(int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9) {
+    public JogoVelhaServerMessage(int turn, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9) {
+        this.turn = turn;
         this.q1 = q1;
         this.q2 = q2;
         this.q3 = q3;
@@ -61,6 +64,15 @@ public class JogoVelhaServerMessage implements Serializable {
         return q9;
     }
     
+    public int getPlayer() {
+        return this.player;
+    }
     
+    public void setPlayer(int player) {
+        this.player = player;
+    }
     
+    public int getTurn() {
+        return this.turn;
+    }
 }

@@ -15,7 +15,7 @@ public class JogoVelhaServer extends Thread {
     protected volatile boolean isRunning;
 
     public JogoVelhaServer(int port) throws IOException {
-        this.game = new JogoVelha(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        this.game = new JogoVelha();
         this.clientsHandler = new JogoVelhaServerClientsHandler();
         this.dispatcher = new JogoVelhaServerDispatcher(this.clientsHandler);
         this.serverHandler = new JogoVelhaServerHandler();
@@ -48,7 +48,7 @@ public class JogoVelhaServer extends Thread {
     public void startGame(JogoVelhaServerConnection client) {
         new Thread(() -> {
             try {
-                this.dispatcher.dispatchMessageToClient(client, this.game.getBoardStatus());
+                this.dispatcher.dispatchMessageToClient(client, this.game.getGameStatus());
             } catch (IOException ex) {
                 Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -64,7 +64,7 @@ public class JogoVelhaServer extends Thread {
                         break;
                     }
                     int q = Integer.parseInt(request);
-                    int p = this.clientsHandler.getClients().indexOf(client);
+                    int p = this.clientsHandler.getClientPosition(client);
 
                     JogoVelhaServerMessage response = this.game.execute(p, q);
                     this.dispatcher.dispatchMessageToAllClients(response);
