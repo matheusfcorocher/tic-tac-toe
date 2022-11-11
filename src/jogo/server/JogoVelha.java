@@ -29,12 +29,13 @@ public class JogoVelha {
         this.q8 = 0;
         this.q9 = 0;
         this.isGameOver = false;
+        this.winner = 0;
     }
 
     public JogoVelhaServerMessage execute(int player, int square) {
         if (this.isYourTurn(player) && !this.isGameOver && !this.hasPlayerColor(square)) {
             this.setSquareColor(player, square);
-            int winner = getWinner();
+            int winner = findWinner();
 
             if (this.isThereAnyWinner(winner)) {
                 this.winner = winner;
@@ -132,7 +133,7 @@ public class JogoVelha {
         }
     }
 
-    private int getWinner() {
+    private int findWinner() {
         int winner = 0;
 
         if (this.q1 != 0 && this.q1 == this.q2 && this.q2 == this.q3) {
@@ -155,7 +156,7 @@ public class JogoVelha {
         return winner;
     }
 
-    private boolean isThereAnyWinner(int winner) {
+    public boolean isThereAnyWinner(int winner) {
         return winner != 0;
     }
 
@@ -165,4 +166,8 @@ public class JogoVelha {
                 this.q7, this.q8, this.q9);
     }
 
+    public int getWinner() {
+        return this.winner;
+    }
+    
 }

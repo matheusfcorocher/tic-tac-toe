@@ -1,4 +1,4 @@
-    package jogo.server;
+package jogo.server;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -11,9 +11,10 @@ public class JogoVelhaServer extends Thread {
 
     protected JogoVelhaServerHandler serverHandler;
     protected JogoVelhaServerClientsHandler clientsHandler;
-    protected final JogoVelha game;
+    private JogoVelha game;
     private final JogoVelhaServerDispatcher dispatcher;
     protected volatile boolean isRunning;
+    private JogoVelhaServerResetVoting resetVoting;
 
     public JogoVelhaServer(int port) throws IOException {
         this.game = new JogoVelha();
@@ -21,6 +22,7 @@ public class JogoVelhaServer extends Thread {
         this.dispatcher = new JogoVelhaServerDispatcher(this.clientsHandler);
         this.serverHandler = new JogoVelhaServerHandler();
         this.serverHandler.create(port);
+        this.resetVoting = new JogoVelhaServerResetVoting();
         this.isRunning = true;
         System.out.println("Server is running on port: " + serverHandler.getServer().getLocalPort());
     }
@@ -50,6 +52,8 @@ public class JogoVelhaServer extends Thread {
         new Thread(() -> {
             try {
                 this.dispatcher.dispatchMessageToClient(client, this.game.getGameStatus());
+                int playersQuantity = this.clientsHandler.getClients().size();
+                this.resetVoting.initVotes(playersQuantity);
             } catch (IOException ex) {
                 Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -66,9 +70,23 @@ public class JogoVelhaServer extends Thread {
                     }
                     int input = request.getInput();
                     int p = this.clientsHandler.getClientPosition(client);
+                    boolean wantsReset = request.getWantsReset();
 
-                    JogoVelhaServerMessage response = this.game.execute(p, input);
-                    this.dispatcher.dispatchMessageToAllClients(response);
+                    if (this.game.isThereAnyWinner(this.game.getWinner())) {
+                        this.resetVoting.addVote(wantsReset, p);
+                        if (this.resetVoting.isReadyToCallElection()) {
+                            boolean reset = this.resetVoting.callResetElection();
+                            if (reset) {
+                                this.game = new JogoVelha();
+                                JogoVelhaServerMessage response = this.game.getGameStatus();
+                                this.dispatcher.dispatchMessageToAllClients(response);
+                            }
+                            this.resetVoting.resetVotingSystem();
+                        }
+                    } else {
+                        JogoVelhaServerMessage response = this.game.execute(p, input);
+                        this.dispatcher.dispatchMessageToAllClients(response);
+                    }
                 }
                 this.clientsHandler.remove(client);
             } catch (InterruptedException ex) {

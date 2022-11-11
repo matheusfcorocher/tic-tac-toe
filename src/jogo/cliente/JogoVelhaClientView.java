@@ -86,7 +86,9 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
         TurnColorTile.setBackground(this.getColorByPlayer(response.getTurn()));
         if (response.getIsGameOver()) {
             this.showWinnerMessage(response.getWinner());
-            this.showResetMessage();
+            int choice = this.showResetMessage();
+            JogoVelhaClientMessage message = new JogoVelhaClientMessage(this.shouldReset(choice), 0);
+            client.handler.sendMessage(message);
         }
     }
 
@@ -97,18 +99,20 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
             output = message + "(vermelho)";
         }
         JOptionPane.showMessageDialog(this,
-                    output, "Aviso", JOptionPane.INFORMATION_MESSAGE);
-    }
-    
-    public void showResetMessage() {
-        String message = "Você quer reiniciar o jogo?";
-        int choice = JOptionPane.showConfirmDialog(this,
-                    message, "Reiniciar o jogo", JOptionPane.YES_NO_OPTION);
-        if(choice == 0) {
-            System.out.println("escolheu sim");
-        }
+                output, "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    public int showResetMessage() {
+        String message = "Você quer reiniciar o jogo?";
+        int choice = JOptionPane.showConfirmDialog(this,
+                message, "Reiniciar o jogo", JOptionPane.YES_NO_OPTION);
+        return choice;
+    }
+    
+    public boolean shouldReset(int choice) {
+        return choice == 0;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -494,7 +498,7 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
     }//GEN-LAST:event_Q7MouseClicked
 
     private void Q8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q8MouseClicked
-        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false,8);
+        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 8);
         client.handler.sendMessage(message);
     }//GEN-LAST:event_Q8MouseClicked
 
