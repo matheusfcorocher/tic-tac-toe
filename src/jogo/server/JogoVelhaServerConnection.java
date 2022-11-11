@@ -61,8 +61,8 @@ public class JogoVelhaServerConnection {
         return this.objectOutputStream != null;
     }
     
-    public String readMessage() throws IOException {
-        return this.input.readLine();
+    public Object readMessage() throws IOException, ClassNotFoundException {
+        return this.objectInputStream.readObject();
     }
                     
     public void closeConnection() throws IOException {

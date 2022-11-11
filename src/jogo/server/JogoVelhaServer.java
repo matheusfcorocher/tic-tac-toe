@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jogo.lib.JogoVelhaClientMessage;
 import jogo.lib.JogoVelhaServerMessage;
 
 public class JogoVelhaServer extends Thread {
@@ -59,14 +60,14 @@ public class JogoVelhaServer extends Thread {
                     thread.start();
                     thread.join(); //waits for thread be resolved
 
-                    String request = serverListener.getRequest();
-                    if (request == null || request.equals("")) {
+                    JogoVelhaClientMessage request = serverListener.getRequest();
+                    if (request == null) {
                         break;
                     }
-                    int q = Integer.parseInt(request);
+                    int input = request.getInput();
                     int p = this.clientsHandler.getClientPosition(client);
 
-                    JogoVelhaServerMessage response = this.game.execute(p, q);
+                    JogoVelhaServerMessage response = this.game.execute(p, input);
                     this.dispatcher.dispatchMessageToAllClients(response);
                 }
                 this.clientsHandler.remove(client);

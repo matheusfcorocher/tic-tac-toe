@@ -9,7 +9,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import jogo.lib.JogoVelhaServerMessage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import jogo.lib.JogoVelhaClientMessage;
 
 /**
  *
@@ -50,8 +52,12 @@ public class JogoVelhaClientConnection {
         this.output.println(outMessage);
     }
 
-    public void sendObject(JogoVelhaServerMessage message) throws IOException {
-        this.objectOutputStream.writeObject(message);
+    public void sendObject(JogoVelhaClientMessage message) {
+        try {
+            this.objectOutputStream.writeObject(message);
+        } catch (IOException ex) {
+            Logger.getLogger(JogoVelhaClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public boolean isConnected() {

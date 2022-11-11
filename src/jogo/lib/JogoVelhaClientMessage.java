@@ -4,24 +4,26 @@
  */
 package jogo.lib;
 
+import java.io.Serializable;
+
 /**
  *
  * @author matheus
  */
-public class JogoVelhaClientMessage {
-    private boolean wantsReset;
-    private String request;
+public class JogoVelhaClientMessage implements Serializable {
+    private final boolean wantsReset;
+    private int input = 0;
 
-    public JogoVelhaClientMessage(boolean wantsReset, String request) {
+    public JogoVelhaClientMessage(boolean wantsReset, int input) {
         this.wantsReset = wantsReset;
-        this.request = request;
+        this.input = input;
     }
     
     public boolean getWantsReset() {
         return wantsReset;
     }
 
-    public String getRequest() {
-        return request;
+    public int getInput() {
+        return input;
     }    
 }

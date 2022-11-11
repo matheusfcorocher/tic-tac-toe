@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import jogo.cliente.JogoVelhaClient;
+import jogo.lib.JogoVelhaClientMessage;
 import jogo.lib.JogoVelhaServerMessage;
 
 public class JogoVelhaClientView extends javax.swing.JFrame {
@@ -483,48 +484,48 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
     }//GEN-LAST:event_BDisconnectActionPerformed
 
     private void Q1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q1MouseClicked
-//        if (Q1.getBackground() == new Color(204, 204, 204))
-        client.handler.sendMessage(1);
+        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 1);
+        client.handler.sendMessage(message);
     }//GEN-LAST:event_Q1MouseClicked
 
     private void Q7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q7MouseClicked
-//        if (Q7.getBackground() == new Color(204, 204, 204))
-        client.handler.sendMessage(7);
+        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 7);
+        client.handler.sendMessage(message);
     }//GEN-LAST:event_Q7MouseClicked
 
     private void Q8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q8MouseClicked
-//        if (Q8.getBackground() == new Color(204, 204, 204))
-        client.handler.sendMessage(8);
+        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false,8);
+        client.handler.sendMessage(message);
     }//GEN-LAST:event_Q8MouseClicked
 
     private void Q9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q9MouseClicked
-//        if (Q9.getBackground() == new Color(204, 204, 204))
-        client.handler.sendMessage(9);
+        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 9);
+        client.handler.sendMessage(message);
     }//GEN-LAST:event_Q9MouseClicked
 
     private void Q6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q6MouseClicked
-//        if (Q6.getBackground() == new Color(204, 204, 204))
-        client.handler.sendMessage(6);
+        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 6);
+        client.handler.sendMessage(message);
     }//GEN-LAST:event_Q6MouseClicked
 
     private void Q5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q5MouseClicked
-//        if (Q5.getBackground() == new Color(204, 204, 204))
-        client.handler.sendMessage(5);
+        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 5);
+        client.handler.sendMessage(message);
     }//GEN-LAST:event_Q5MouseClicked
 
     private void Q4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q4MouseClicked
-//        if (Q4.getBackground() == new Color(204, 204, 204))
-        client.handler.sendMessage(4);
+        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 4);
+        client.handler.sendMessage(message);
     }//GEN-LAST:event_Q4MouseClicked
 
     private void Q3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q3MouseClicked
-//        if (Q3.getBackground() == new Color(204, 204, 204))
-        client.handler.sendMessage(3);
+        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 3);
+        client.handler.sendMessage(message);
     }//GEN-LAST:event_Q3MouseClicked
 
     private void Q2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q2MouseClicked
-//        if (Q2.getBackground() == new Color(204, 204, 204))
-        client.handler.sendMessage(2);
+        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 2);
+        client.handler.sendMessage(message);
     }//GEN-LAST:event_Q2MouseClicked
 
     /**
