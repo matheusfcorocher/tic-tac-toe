@@ -11,11 +11,12 @@ import jogo.lib.JogoVelhaServerMessage;
  * @author matheus
  */
 public class JogoVelha {
-    
+
     protected int turn;
     protected int q1, q2, q3, q4, q5, q6, q7, q8, q9;
     protected boolean isGameOver;
-    
+    private int winner;
+
     public JogoVelha() {
         this.turn = 1;
         this.q1 = 0;
@@ -29,41 +30,42 @@ public class JogoVelha {
         this.q9 = 0;
         this.isGameOver = false;
     }
-    
+
     public JogoVelhaServerMessage execute(int player, int square) {
         if (this.isYourTurn(player) && !this.isGameOver && !this.hasPlayerColor(square)) {
             this.setSquareColor(player, square);
             int winner = getWinner();
-            
+
             if (this.isThereAnyWinner(winner)) {
+                this.winner = winner;
                 this.isGameOver = true;
             }
-            
+
             this.goToNextTurn();
             if (this.shouldResetTurn()) {
                 this.resetTurn();
             }
         }
-        
+
         return this.getGameStatus();
     }
-    
+
     private boolean isYourTurn(int player) {
         return this.turn == player;
     }
-    
+
     private void goToNextTurn() {
         this.turn += 1;
     }
-    
+
     private void resetTurn() {
         this.turn = 1;
     }
-    
+
     private boolean shouldResetTurn() {
         return this.turn == 3;
     }
-    
+
     private boolean hasPlayerColor(int square) {
         int s = 0;
         switch (square) {
@@ -97,7 +99,7 @@ public class JogoVelha {
         }
         return s != 0;
     }
-    
+
     private void setSquareColor(int player, int square) {
         switch (square) {
             case 1:
@@ -129,10 +131,10 @@ public class JogoVelha {
                 break;
         }
     }
-    
+
     private int getWinner() {
         int winner = 0;
-        
+
         if (this.q1 != 0 && this.q1 == this.q2 && this.q2 == this.q3) {
             winner = this.q1;
         } else if (this.q4 != 0 && this.q4 == this.q5 && this.q5 == this.q6) {
@@ -152,15 +154,15 @@ public class JogoVelha {
         }
         return winner;
     }
-    
+
     private boolean isThereAnyWinner(int winner) {
         return winner != 0;
     }
-    
+
     protected JogoVelhaServerMessage getGameStatus() {
-        return new JogoVelhaServerMessage(this.turn, this.q1, this.q2, this.q3,
+        return new JogoVelhaServerMessage(this.turn, this.winner, this.isGameOver, this.q1, this.q2, this.q3,
                 this.q4, this.q5, this.q6,
                 this.q7, this.q8, this.q9);
     }
-    
+
 }

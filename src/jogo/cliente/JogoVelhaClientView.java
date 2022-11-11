@@ -11,7 +11,7 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
     public JogoVelhaClientView() {
         initComponents();
     }
-    
+
     private Color getColorByPlayer(Integer p) {
         Color color = new Color(204, 204, 204);//standard square color(gray) 
         if (p == 1) {
@@ -19,12 +19,12 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
         } else if (p == 2) {
             color = Color.RED;
         }
-        
+
         return color;
     }
 
     private void colorizeSquare(Integer q, Integer p) {
-        Color color = this.getColorByPlayer(p);        
+        Color color = this.getColorByPlayer(p);
         switch (q) {
             case 1:
                 Q1.setBackground(color);
@@ -70,7 +70,7 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
         Q8.setBackground(color);
         Q9.setBackground(color);
     }
-    
+
     public void updateView(JogoVelhaServerMessage response) {
         this.colorizeSquare(1, response.getQ1());
         this.colorizeSquare(2, response.getQ2());
@@ -83,6 +83,20 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
         this.colorizeSquare(9, response.getQ9());
         PlayerColorTile.setBackground(this.getColorByPlayer(response.getPlayer()));
         TurnColorTile.setBackground(this.getColorByPlayer(response.getTurn()));
+        if (response.getIsGameOver()) {
+            this.showWinner(response.getWinner());
+        }
+    }
+
+    public void showWinner(int winner) {
+        /* JOptionPane Java user input example */
+        String message = "O vencedor foi o jogador " + winner;
+        String output = message + "(verde)";
+        if (winner == 2) {
+            output = message + "(vermelho)";
+        }
+        JOptionPane.showMessageDialog(this,
+                    output, "AVISO", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**

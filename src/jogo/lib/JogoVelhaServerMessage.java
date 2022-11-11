@@ -13,10 +13,14 @@ import java.io.Serializable;
 public class JogoVelhaServerMessage implements Serializable {
     private int player;
     private int turn;
+    private int winner;
+    private boolean isGameOver;
     private int q1, q2, q3, q4, q5, q6, q7, q8, q9;
 
-    public JogoVelhaServerMessage(int turn, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9) {
+    public JogoVelhaServerMessage(int turn, int winner, boolean isGameOver, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9) {
         this.turn = turn;
+        this.winner = winner;
+        this.isGameOver = isGameOver;
         this.q1 = q1;
         this.q2 = q2;
         this.q3 = q3;
@@ -27,7 +31,15 @@ public class JogoVelhaServerMessage implements Serializable {
         this.q8 = q8;
         this.q9 = q9;
     }
+    
+    public int getWinner() {
+        return winner;
+    }
 
+    public boolean getIsGameOver() {
+        return isGameOver;
+    }
+    
     public int getQ1() {
         return q1;
     }
