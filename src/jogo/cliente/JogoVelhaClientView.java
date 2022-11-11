@@ -84,19 +84,28 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
         PlayerColorTile.setBackground(this.getColorByPlayer(response.getPlayer()));
         TurnColorTile.setBackground(this.getColorByPlayer(response.getTurn()));
         if (response.getIsGameOver()) {
-            this.showWinner(response.getWinner());
+            this.showWinnerMessage(response.getWinner());
+            this.showResetMessage();
         }
     }
 
-    public void showWinner(int winner) {
-        /* JOptionPane Java user input example */
+    public void showWinnerMessage(int winner) {
         String message = "O vencedor foi o jogador " + winner;
         String output = message + "(verde)";
         if (winner == 2) {
             output = message + "(vermelho)";
         }
         JOptionPane.showMessageDialog(this,
-                    output, "AVISO", JOptionPane.INFORMATION_MESSAGE);
+                    output, "Aviso", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public void showResetMessage() {
+        String message = "Você quer reiniciar o jogo?";
+        int choice = JOptionPane.showConfirmDialog(this,
+                    message, "Reiniciar o jogo", JOptionPane.YES_NO_OPTION);
+        if(choice == 0) {
+            System.out.println("escolheu sim");
+        }
     }
 
     /**
