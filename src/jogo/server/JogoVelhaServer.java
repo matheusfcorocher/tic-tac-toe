@@ -71,7 +71,7 @@ public class JogoVelhaServer extends Thread {
                     int input = request.getInput();
                     int p = this.clientsHandler.getClientPosition(client);
                     boolean wantsReset = request.getWantsReset();
-
+                    
                     if (this.game.isThereAnyWinner(this.game.getWinner())) {
                         this.resetVoting.addVote(wantsReset, p);
                         if (this.resetVoting.isReadyToCallElection()) {

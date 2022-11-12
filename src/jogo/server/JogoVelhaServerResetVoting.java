@@ -23,16 +23,16 @@ public class JogoVelhaServerResetVoting {
     }
 
     public void initVotes(int playersQuantity) {
-        for (int i = 0; i < playersQuantity; i++) {
+        for (int i = 0; i < playersQuantity - this.resetVotes.size(); i++) {
             this.resetVotes.add(0);
         }
     }
 
     public void resetVotingSystem() {
-        for (Integer vote : this.resetVotes) {
-            this.resetVotes.remove(vote);
+        for (int i = 0; i < this.resetVotes.size(); i++) {
+            this.resetVotes.set(i,0);
         }
-        this.initVotes(this.resetVotes.size());
+        System.out.println(this.resetVotes);
     }
 
     public ArrayList<Integer> getResetVotes() {
@@ -44,7 +44,7 @@ public class JogoVelhaServerResetVoting {
         if (wantsReset) {
             vote = 2;
         }
-//        this.resetVotes[p - 1] = vote;
+        this.resetVotes.set(p-1, vote);
     }
 
     public boolean isReadyToCallElection() {
@@ -58,6 +58,7 @@ public class JogoVelhaServerResetVoting {
     }
 
     public boolean callResetElection() {
+        System.out.println("Starting reset election");
         boolean shouldReset = true;
         for (int resetVote : this.resetVotes) {
             if (resetVote == 1) {
