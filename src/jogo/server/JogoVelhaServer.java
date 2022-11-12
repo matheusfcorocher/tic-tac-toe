@@ -38,7 +38,7 @@ public class JogoVelhaServer extends Thread {
                     this.clientsHandler.add(client);
                     this.startGame(client);
                 } else {
-                    this.serverHandler.close();
+                    this.serverHandler.close(); //server stop listening for new clients
                 }
             } catch (IOException ex) {
                 if (ex.getMessage().contentEquals("Socket closed")) {
@@ -78,10 +78,14 @@ public class JogoVelhaServer extends Thread {
                         this.resetVoting.addVote(wantsReset, p);
                         if (this.resetVoting.isReadyToCallElection()) {
                             boolean reset = this.resetVoting.callResetElection();
+                            this.game = new JogoVelha();
+                            JogoVelhaServerMessage response = this.game.getGameStatus();
                             if (reset) {
-                                this.game = new JogoVelha();
-                                JogoVelhaServerMessage response = this.game.getGameStatus();
                                 this.dispatcher.dispatchMessageToAllClients(response);
+                            } else {
+                                response.setShouldDisconnect(true);
+                                this.dispatcher.dispatchMessageToAllClients(response);
+                                break;
                             }
                             this.resetVoting.resetVotingSystem();
                         }
@@ -99,7 +103,7 @@ public class JogoVelhaServer extends Thread {
             }
         }).start();
     }
-
+    
     public synchronized void finish() throws Throwable {
         this.finalize();
     }

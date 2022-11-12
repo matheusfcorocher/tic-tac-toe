@@ -13,13 +13,13 @@ import java.net.Socket;
  * @author matheus
  */
 public class JogoVelhaServerHandler {
-    
+
     private ServerSocket server;
-        
+
     public void create(int port) throws IOException {
         this.server = new ServerSocket(port);
     }
-
+    
     public ServerSocket getServer() {
         return this.server;
     }
