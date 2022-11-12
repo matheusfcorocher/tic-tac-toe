@@ -31,6 +31,7 @@ public class JogoVelhaClient extends Thread {
                 JogoVelhaServerMessage response = this.listener.getResponse();
                 this.view.updateView(response);
             }
+            this.view.disconnectClient();
         } catch (IOException ex) {
             Logger.getLogger(JogoVelhaClient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {

@@ -67,7 +67,7 @@ public class JogoVelhaClientConnection {
     public boolean isInputStreamNotEmpty() {
         return this.objectInputStream != null;
     }
-    
+      
     public Object readMessage() throws IOException, ClassNotFoundException {
         return this.objectInputStream.readObject();
     }
