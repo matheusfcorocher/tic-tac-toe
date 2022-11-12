@@ -108,11 +108,17 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
                 message, "Reiniciar o jogo", JOptionPane.YES_NO_OPTION);
         return choice;
     }
-    
+
     public boolean shouldReset(int choice) {
         return choice == 0;
     }
-    
+
+    public void disconnectClient() throws IOException {
+        client.close();
+        BConnect.setEnabled(true);
+        BDisconnect.setEnabled(false);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -478,9 +484,7 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
 
     private void BDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BDisconnectActionPerformed
         try {
-            client.close();
-            BConnect.setEnabled(true);
-            BDisconnect.setEnabled(false);
+            this.disconnectClient();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this,
                     ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
