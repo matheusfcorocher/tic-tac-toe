@@ -29,6 +29,9 @@ public class JogoVelhaClient extends Thread {
                 thread.start();
                 thread.join(); // waits for thread be resolved
                 JogoVelhaServerMessage response = this.listener.getResponse();
+                if(response.getShouldDisconnect()) {
+                    break;
+                }
                 this.view.updateView(response);
             }
             this.view.disconnectClient();
