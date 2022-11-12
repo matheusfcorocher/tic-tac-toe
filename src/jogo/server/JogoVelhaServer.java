@@ -37,6 +37,8 @@ public class JogoVelhaServer extends Thread {
                     JogoVelhaServerConnection client = new JogoVelhaServerConnection(socket);
                     this.clientsHandler.add(client);
                     this.startGame(client);
+                } else {
+                    this.serverHandler.close();
                 }
             } catch (IOException ex) {
                 if (ex.getMessage().contentEquals("Socket closed")) {
@@ -71,7 +73,7 @@ public class JogoVelhaServer extends Thread {
                     int input = request.getInput();
                     int p = this.clientsHandler.getClientPosition(client);
                     boolean wantsReset = request.getWantsReset();
-                    
+
                     if (this.game.isThereAnyWinner(this.game.getWinner())) {
                         this.resetVoting.addVote(wantsReset, p);
                         if (this.resetVoting.isReadyToCallElection()) {
