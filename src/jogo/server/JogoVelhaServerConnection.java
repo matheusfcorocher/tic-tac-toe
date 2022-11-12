@@ -66,6 +66,8 @@ public class JogoVelhaServerConnection {
     }
                     
     public void closeConnection() throws IOException {
+        this.objectInputStream.close();
+        this.objectOutputStream.close();
         this.input.close();
         this.output.close();
         this.socket.close();
