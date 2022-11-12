@@ -15,6 +15,7 @@ public class JogoVelhaServerMessage implements Serializable {
     private int turn;
     private int winner;
     private boolean isGameOver;
+    private boolean shouldDisconnect;
     private int q1, q2, q3, q4, q5, q6, q7, q8, q9;
 
     public JogoVelhaServerMessage(int turn, int winner, boolean isGameOver, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9) {
@@ -30,6 +31,7 @@ public class JogoVelhaServerMessage implements Serializable {
         this.q7 = q7;
         this.q8 = q8;
         this.q9 = q9;
+        this.shouldDisconnect = false;
     }
     
     public int getWinner() {
@@ -87,4 +89,13 @@ public class JogoVelhaServerMessage implements Serializable {
     public int getTurn() {
         return this.turn;
     }
+
+    public boolean getShouldDisconnect() {
+        return shouldDisconnect;
+    }
+
+    public void setShouldDisconnect(boolean shouldDisconnect) {
+        this.shouldDisconnect = shouldDisconnect;
+    }
+    
 }
