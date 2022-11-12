@@ -26,7 +26,7 @@ public class JogoVelhaServerClientsHandler {
     }
 
     public boolean isClientsNotFull() {
-        return clients.size() <= 2;
+        return this.clients.size() < 2;
     }
 
     public synchronized void add(JogoVelhaServerConnection client) {
@@ -45,7 +45,7 @@ public class JogoVelhaServerClientsHandler {
             }
         }
     }
-    
+
     public int getClientPosition(JogoVelhaServerConnection client) {
         return this.getClients().indexOf(client) + 1;
     }
