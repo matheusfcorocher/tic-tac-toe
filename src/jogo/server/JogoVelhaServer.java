@@ -15,7 +15,7 @@ public class JogoVelhaServer extends Thread {
     private JogoVelha game;
     private JogoVelhaServerDispatcher dispatcher;
     protected volatile boolean isRunning;
-    private JogoVelhaServerResetVoting resetVoting;
+    private ResetElectionManager resetElectionManager;
 
     public JogoVelhaServer(int port, JogoVelhaServerVIew view) throws IOException {
         this.view = view;
@@ -24,7 +24,7 @@ public class JogoVelhaServer extends Thread {
         this.dispatcher = new JogoVelhaServerDispatcher(this.clientsHandler);
         this.serverHandler = new JogoVelhaServerHandler();
         this.serverHandler.create(port);
-        this.resetVoting = new JogoVelhaServerResetVoting();
+        this.resetElectionManager = new ResetElectionManager();
         this.isRunning = true;
         System.out.println("Server is running on port: " + serverHandler.getServer().getLocalPort());
     }
@@ -57,7 +57,7 @@ public class JogoVelhaServer extends Thread {
             try {
                 this.dispatcher.dispatchMessageToClient(client, this.game.getGameStatus());
                 int playersQuantity = this.clientsHandler.getClients().size();
-                this.resetVoting.initVotes(playersQuantity);
+                this.resetElectionManager.initVotes(playersQuantity);
             } catch (IOException ex) {
                 Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -77,9 +77,9 @@ public class JogoVelhaServer extends Thread {
                     boolean wantsReset = request.getWantsReset();
 
                     if (this.game.isThereAnyWinner(this.game.getWinner())) {
-                        this.resetVoting.addVote(wantsReset, p);
-                        if (this.resetVoting.isReadyToCallElection()) {
-                            boolean reset = this.resetVoting.callResetElection();
+                        this.resetElectionManager.addVote(wantsReset, p);
+                        if (this.resetElectionManager.isReadyToCallElection()) {
+                            boolean reset = this.resetElectionManager.callResetElection();
                             this.game = new JogoVelha();
                             JogoVelhaServerMessage response = this.game.getGameStatus();
                             if (reset) {
@@ -89,7 +89,7 @@ public class JogoVelhaServer extends Thread {
                                 this.dispatcher.dispatchMessageToAllClients(response);
                                 break;
                             }
-                            this.resetVoting.resetVotingSystem();
+                            this.resetElectionManager.resetElection();
                         }
                     } else {
                         JogoVelhaServerMessage response = this.game.execute(p, input);
@@ -112,6 +112,8 @@ public class JogoVelhaServer extends Thread {
             }
         }).start();
     }
+    
+    //separate events logic, add disconnect messages in client
 
     public synchronized void finish() throws Throwable {
         this.finalize();

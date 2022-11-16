@@ -11,14 +11,14 @@ import java.util.Arrays;
  *
  * @author matheus
  */
-public class JogoVelhaServerResetVoting {
+public class ResetElectionManager {
 
     private ArrayList<Integer> resetVotes;
 
     // 0 - means there is no vote
     // 1 - means user votes no
     // 2 - means user votes yes
-    public JogoVelhaServerResetVoting() {
+    public ResetElectionManager() {
         this.resetVotes = new ArrayList<>();
     }
 
@@ -28,7 +28,7 @@ public class JogoVelhaServerResetVoting {
         }
     }
 
-    public void resetVotingSystem() {
+    public void resetElection() {
         for (int i = 0; i < this.resetVotes.size(); i++) {
             this.resetVotes.set(i,0);
         }
