@@ -3,11 +3,11 @@ package jogo.server;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
-public class JogoVelhaServerVIew extends javax.swing.JFrame {
+public class ServerView extends javax.swing.JFrame {
 
     private JogoVelhaServer server;
 
-    public JogoVelhaServerVIew() {
+    public ServerView() {
         initComponents();
     }
 
@@ -141,7 +141,7 @@ public class JogoVelhaServerVIew extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            new JogoVelhaServerVIew().setVisible(true);
+            new ServerView().setVisible(true);
         });
     }
 

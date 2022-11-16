@@ -9,7 +9,7 @@ import jogo.lib.JogoVelhaServerMessage;
 
 public class JogoVelhaServer extends Thread {
 
-    private JogoVelhaServerVIew view;
+    private ServerView view;
     protected JogoVelhaServerHandler serverHandler;
     protected JogoVelhaServerClientsHandler clientsHandler;
     private JogoVelha game;
@@ -17,7 +17,7 @@ public class JogoVelhaServer extends Thread {
     protected volatile boolean isRunning;
     private ResetElectionManager resetElectionManager;
 
-    public JogoVelhaServer(int port, JogoVelhaServerVIew view) throws IOException {
+    public JogoVelhaServer(int port, ServerView view) throws IOException {
         this.view = view;
         this.game = new JogoVelha();
         this.clientsHandler = new JogoVelhaServerClientsHandler();
