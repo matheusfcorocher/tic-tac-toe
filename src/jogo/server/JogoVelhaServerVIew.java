@@ -4,13 +4,19 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 
 public class JogoVelhaServerVIew extends javax.swing.JFrame {
-    
+
     private JogoVelhaServer server;
-    
+
     public JogoVelhaServerVIew() {
         initComponents();
     }
 
+    public void disconnectServer() {
+        jButton1.setEnabled(true);
+        jTextField1.setEnabled(true);
+        jButton3.setEnabled(false);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -107,11 +113,11 @@ public class JogoVelhaServerVIew extends javax.swing.JFrame {
         String porta = jTextField1.getText();
         int port = Integer.parseInt(porta);
         try {
-           this.server = (new JogoVelhaServer(port));
-           this.server.start();
-           jButton1.setEnabled(false);
-           jTextField1.setEnabled(false);
-           jButton3.setEnabled(true);
+            this.server = new JogoVelhaServer(port, this);
+            this.server.start();
+            jButton1.setEnabled(false);
+            jTextField1.setEnabled(false);
+            jButton3.setEnabled(true);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
         }
@@ -123,10 +129,8 @@ public class JogoVelhaServerVIew extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
-           this.server.finish();
-           jButton1.setEnabled(true);
-           jTextField1.setEnabled(true);
-           jButton3.setEnabled(false);
+            this.server.finish();
+            this.disconnectServer();
         } catch (Throwable t) {
             System.out.println(t.getMessage());
         }
