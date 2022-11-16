@@ -9,14 +9,16 @@ import jogo.lib.JogoVelhaServerMessage;
 
 public class JogoVelhaServer extends Thread {
 
+    private JogoVelhaServerVIew view;
     protected JogoVelhaServerHandler serverHandler;
     protected JogoVelhaServerClientsHandler clientsHandler;
     private JogoVelha game;
-    private final JogoVelhaServerDispatcher dispatcher;
+    private JogoVelhaServerDispatcher dispatcher;
     protected volatile boolean isRunning;
     private JogoVelhaServerResetVoting resetVoting;
 
-    public JogoVelhaServer(int port) throws IOException {
+    public JogoVelhaServer(int port, JogoVelhaServerVIew view) throws IOException {
+        this.view = view;
         this.game = new JogoVelha();
         this.clientsHandler = new JogoVelhaServerClientsHandler();
         this.dispatcher = new JogoVelhaServerDispatcher(this.clientsHandler);
@@ -41,10 +43,10 @@ public class JogoVelhaServer extends Thread {
                     this.serverHandler.close(); //server stop listening for new clients
                 }
             } catch (IOException ex) {
-                if (ex.getMessage().contentEquals("Socket closed")) {
-
-                } else {
-                    Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex);
+                try {
+                    this.serverHandler.close();
+                } catch (IOException ex1) {
+                    Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex1);
                 }
             }
         }
@@ -95,6 +97,13 @@ public class JogoVelhaServer extends Thread {
                     }
                 }
                 this.clientsHandler.remove(client);
+                if (this.clientsHandler.getClients().isEmpty()) {
+                    try {
+                        this.finish();
+                    } catch (Throwable ex) {
+                        Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();//interrupt listener thread
                 return;
@@ -103,9 +112,10 @@ public class JogoVelhaServer extends Thread {
             }
         }).start();
     }
-    
+
     public synchronized void finish() throws Throwable {
         this.finalize();
+        this.view.disconnectServer();
     }
 
     @Override
