@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 
 public class ServerView extends javax.swing.JFrame {
 
-    private JogoVelhaServer server;
+    private Server server;
 
     public ServerView() {
         initComponents();
@@ -113,7 +113,7 @@ public class ServerView extends javax.swing.JFrame {
         String porta = jTextField1.getText();
         int port = Integer.parseInt(porta);
         try {
-            this.server = new JogoVelhaServer(port, this);
+            this.server = new Server(port, this);
             this.server.start();
             jButton1.setEnabled(false);
             jTextField1.setEnabled(false);

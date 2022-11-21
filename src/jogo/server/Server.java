@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import jogo.lib.JogoVelhaClientMessage;
 import jogo.lib.JogoVelhaServerMessage;
 
-public class JogoVelhaServer extends Thread {
+public class Server extends Thread {
 
     private ServerView view;
     protected JogoVelhaServerHandler serverHandler;
@@ -17,7 +17,7 @@ public class JogoVelhaServer extends Thread {
     protected volatile boolean isRunning;
     private ResetElectionManager resetElectionManager;
 
-    public JogoVelhaServer(int port, ServerView view) throws IOException {
+    public Server(int port, ServerView view) throws IOException {
         this.view = view;
         this.game = new JogoVelha();
         this.clientsHandler = new JogoVelhaServerClientsHandler();
@@ -46,7 +46,7 @@ public class JogoVelhaServer extends Thread {
                 try {
                     this.serverHandler.close();
                 } catch (IOException ex1) {
-                    Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex1);
+                    Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex1);
                 }
             }
         }
@@ -59,7 +59,7 @@ public class JogoVelhaServer extends Thread {
                 int playersQuantity = this.clientsHandler.getClients().size();
                 this.resetElectionManager.initVotes(playersQuantity);
             } catch (IOException ex) {
-                Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 while (this.isRunning) {
@@ -101,14 +101,14 @@ public class JogoVelhaServer extends Thread {
                     try {
                         this.finish();
                     } catch (Throwable ex) {
-                        Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();//interrupt listener thread
                 return;
             } catch (IOException ex) {
-                Logger.getLogger(JogoVelhaServer.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             }
         }).start();
     }
