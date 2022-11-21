@@ -63,7 +63,7 @@ public class Server extends Thread {
             }
             try {
                 while (this.isRunning) {
-                    JogoVelhaServerListener serverListener = new JogoVelhaServerListener(client);
+                    ServerListener serverListener = new ServerListener(client);
                     Thread thread = new Thread(serverListener);
                     thread.start();
                     thread.join(); //waits for thread be resolved

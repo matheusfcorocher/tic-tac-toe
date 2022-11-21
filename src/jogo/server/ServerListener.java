@@ -5,12 +5,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jogo.lib.JogoVelhaClientMessage;
 
-public class JogoVelhaServerListener implements Runnable {
+public class ServerListener implements Runnable {
 
     private final ServerConnection client;
     private JogoVelhaClientMessage request;
 
-    public JogoVelhaServerListener(ServerConnection client) throws IOException {
+    public ServerListener(ServerConnection client) throws IOException {
         this.client = client;
     }
 
@@ -24,10 +24,10 @@ public class JogoVelhaServerListener implements Runnable {
             try {
                 this.client.closeConnection();
             } catch (IOException ex1) {
-                Logger.getLogger(JogoVelhaServerListener.class.getName()).log(Level.SEVERE, null, ex1);
+                Logger.getLogger(ServerListener.class.getName()).log(Level.SEVERE, null, ex1);
             }
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(JogoVelhaServerListener.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServerListener.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
