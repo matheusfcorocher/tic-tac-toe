@@ -21,14 +21,14 @@ public class JogoVelhaServerDispatcher {
     }
 
     public synchronized void dispatchMessageToAllClients(JogoVelhaServerMessage response) throws IOException {
-        List<JogoVelhaServerConnection> clients = clientsHandler.getClients();
-        for (JogoVelhaServerConnection cli : clients) {
+        List<ServerConnection> clients = clientsHandler.getClients();
+        for (ServerConnection cli : clients) {
             this.dispatchMessageToClient(cli, response);
         }
         System.out.println("Dispatch message to clients");
     }
 
-    public synchronized void dispatchMessageToClient(JogoVelhaServerConnection client, JogoVelhaServerMessage response) throws IOException {
+    public synchronized void dispatchMessageToClient(ServerConnection client, JogoVelhaServerMessage response) throws IOException {
         int p = this.clientsHandler.getClientPosition(client);
         response.setPlayer(p);
         if (client.isSocketNotEmpty() && client.isConnected() && client.isOutputStreamNotEmpty()) {

@@ -36,7 +36,7 @@ public class Server extends Thread {
                 if (this.clientsHandler.isClientsNotFull()) {
                     Socket socket;
                     socket = this.serverHandler.acceptClient();
-                    JogoVelhaServerConnection client = new JogoVelhaServerConnection(socket);
+                    ServerConnection client = new ServerConnection(socket);
                     this.clientsHandler.add(client);
                     this.startGame(client);
                 } else {
@@ -52,7 +52,7 @@ public class Server extends Thread {
         }
     }
 
-    public void startGame(JogoVelhaServerConnection client) {
+    public void startGame(ServerConnection client) {
         new Thread(() -> {
             try {
                 this.dispatcher.dispatchMessageToClient(client, this.game.getGameStatus());

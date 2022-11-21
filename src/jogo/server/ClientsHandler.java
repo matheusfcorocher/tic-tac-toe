@@ -15,7 +15,7 @@ import jogo.lib.ClientMaximumLimitException;
  */
 public class ClientsHandler {
 
-    protected final List<JogoVelhaServerConnection> clients;
+    protected final List<ServerConnection> clients;
 
     public ClientsHandler() {
         this.clients = new ArrayList<>();
@@ -29,24 +29,24 @@ public class ClientsHandler {
         return this.clients.size() < 2;
     }
 
-    public synchronized void add(JogoVelhaServerConnection client) {
+    public synchronized void add(ServerConnection client) {
         this.clients.add(client);
     }
 
-    public synchronized void remove(JogoVelhaServerConnection client) throws IOException {
+    public synchronized void remove(ServerConnection client) throws IOException {
         this.clients.remove(client);
         client.closeConnection();
     }
 
     public synchronized void removeAllClients() throws IOException {
-        for (JogoVelhaServerConnection cli : this.clients) {
+        for (ServerConnection cli : this.clients) {
             if (cli.getSocket() != null && cli.getSocket().isConnected() && cli.getOutput() != null) {
                 this.remove(cli);
             }
         }
     }
 
-    public int getClientPosition(JogoVelhaServerConnection client) {
+    public int getClientPosition(ServerConnection client) {
         return this.getClients().indexOf(client) + 1;
     }
 }

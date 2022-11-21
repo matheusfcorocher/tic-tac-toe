@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class JogoVelhaServerConnection {
+public class ServerConnection {
 
     private final Socket socket;
     private final BufferedReader input;
@@ -17,7 +17,7 @@ public class JogoVelhaServerConnection {
     private final ObjectInputStream objectInputStream;
     private final ObjectOutputStream objectOutputStream;
 
-    public JogoVelhaServerConnection(Socket socket) throws IOException {
+    public ServerConnection(Socket socket) throws IOException {
         this.socket = socket;
         this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.output = new PrintWriter(this.socket.getOutputStream(), true);
