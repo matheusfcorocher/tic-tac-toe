@@ -5,7 +5,7 @@
 package jogo.cliente;
 
 import java.io.IOException;
-import jogo.lib.JogoVelhaClientMessage;
+import jogo.lib.ClientMessage;
 
 /**
  * this class has the purpose to handle all user inputs
@@ -19,7 +19,7 @@ public class JogoVelhaClientHandler {
         this.clientConnection = clientConnection;
     }
     
-    public void sendMessage(JogoVelhaClientMessage message) {
+    public void sendMessage(ClientMessage message) {
         this.clientConnection.sendObject(message);
     }
     

@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jogo.lib.JogoVelhaClientMessage;
+import jogo.lib.ClientMessage;
 
 /**
  *
@@ -52,7 +52,7 @@ public class JogoVelhaClientConnection {
         this.output.println(outMessage);
     }
 
-    public void sendObject(JogoVelhaClientMessage message) {
+    public void sendObject(ClientMessage message) {
         try {
             this.objectOutputStream.writeObject(message);
         } catch (IOException ex) {

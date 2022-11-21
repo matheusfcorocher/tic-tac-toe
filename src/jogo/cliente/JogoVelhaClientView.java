@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import jogo.cliente.JogoVelhaClient;
-import jogo.lib.JogoVelhaClientMessage;
+import jogo.lib.ClientMessage;
 import jogo.lib.JogoVelhaServerMessage;
 
 public class JogoVelhaClientView extends javax.swing.JFrame {
@@ -87,7 +87,7 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
         if (response.getIsGameOver()) {
             this.showWinnerMessage(response.getWinner());
             int choice = this.showResetMessage();
-            JogoVelhaClientMessage message = new JogoVelhaClientMessage(this.shouldReset(choice), 0);
+            ClientMessage message = new ClientMessage(this.shouldReset(choice), 0);
             client.handler.sendMessage(message);
         }
     }
@@ -492,47 +492,47 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
     }//GEN-LAST:event_BDisconnectActionPerformed
 
     private void Q1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q1MouseClicked
-        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 1);
+        ClientMessage message = new ClientMessage(false, 1);
         client.handler.sendMessage(message);
     }//GEN-LAST:event_Q1MouseClicked
 
     private void Q7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q7MouseClicked
-        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 7);
+        ClientMessage message = new ClientMessage(false, 7);
         client.handler.sendMessage(message);
     }//GEN-LAST:event_Q7MouseClicked
 
     private void Q8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q8MouseClicked
-        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 8);
+        ClientMessage message = new ClientMessage(false, 8);
         client.handler.sendMessage(message);
     }//GEN-LAST:event_Q8MouseClicked
 
     private void Q9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q9MouseClicked
-        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 9);
+        ClientMessage message = new ClientMessage(false, 9);
         client.handler.sendMessage(message);
     }//GEN-LAST:event_Q9MouseClicked
 
     private void Q6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q6MouseClicked
-        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 6);
+        ClientMessage message = new ClientMessage(false, 6);
         client.handler.sendMessage(message);
     }//GEN-LAST:event_Q6MouseClicked
 
     private void Q5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q5MouseClicked
-        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 5);
+        ClientMessage message = new ClientMessage(false, 5);
         client.handler.sendMessage(message);
     }//GEN-LAST:event_Q5MouseClicked
 
     private void Q4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q4MouseClicked
-        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 4);
+        ClientMessage message = new ClientMessage(false, 4);
         client.handler.sendMessage(message);
     }//GEN-LAST:event_Q4MouseClicked
 
     private void Q3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q3MouseClicked
-        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 3);
+        ClientMessage message = new ClientMessage(false, 3);
         client.handler.sendMessage(message);
     }//GEN-LAST:event_Q3MouseClicked
 
     private void Q2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Q2MouseClicked
-        JogoVelhaClientMessage message = new JogoVelhaClientMessage(false, 2);
+        ClientMessage message = new ClientMessage(false, 2);
         client.handler.sendMessage(message);
     }//GEN-LAST:event_Q2MouseClicked
 

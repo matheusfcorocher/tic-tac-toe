@@ -3,12 +3,12 @@ package jogo.server;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jogo.lib.JogoVelhaClientMessage;
+import jogo.lib.ClientMessage;
 
 public class ServerListener implements Runnable {
 
     private final ServerConnection client;
-    private JogoVelhaClientMessage request;
+    private ClientMessage request;
 
     public ServerListener(ServerConnection client) throws IOException {
         this.client = client;
@@ -18,7 +18,7 @@ public class ServerListener implements Runnable {
     public void run() {
         try {
             if (this.client.isConnected() && this.client.isInputStreamNotEmpty()) {
-                this.request = (JogoVelhaClientMessage) this.client.readMessage();
+                this.request = (ClientMessage) this.client.readMessage();
             }
         } catch (IOException ex) {
             try {
@@ -31,7 +31,7 @@ public class ServerListener implements Runnable {
         }
     }
     
-    public JogoVelhaClientMessage getRequest() {
+    public ClientMessage getRequest() {
         return this.request;
     }
 }

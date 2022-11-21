@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jogo.lib.JogoVelhaClientMessage;
+import jogo.lib.ClientMessage;
 import jogo.lib.JogoVelhaServerMessage;
 
 public class Server extends Thread {
@@ -68,7 +68,7 @@ public class Server extends Thread {
                     thread.start();
                     thread.join(); //waits for thread be resolved
 
-                    JogoVelhaClientMessage request = serverListener.getRequest();
+                    ClientMessage request = serverListener.getRequest();
                     if (request == null) {
                         break;
                     }

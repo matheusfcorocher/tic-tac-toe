@@ -10,11 +10,11 @@ import java.io.Serializable;
  *
  * @author matheus
  */
-public class JogoVelhaClientMessage implements Serializable {
+public class ClientMessage implements Serializable {
     private final boolean wantsReset;
     private int input = 0;
 
-    public JogoVelhaClientMessage(boolean wantsReset, int input) {
+    public ClientMessage(boolean wantsReset, int input) {
         this.wantsReset = wantsReset;
         this.input = input;
     }
