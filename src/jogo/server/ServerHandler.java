@@ -12,7 +12,7 @@ import java.net.Socket;
  *
  * @author matheus
  */
-public class JogoVelhaServerHandler {
+public class ServerHandler {
 
     private ServerSocket server;
 

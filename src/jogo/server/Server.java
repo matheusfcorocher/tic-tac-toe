@@ -10,7 +10,7 @@ import jogo.lib.JogoVelhaServerMessage;
 public class Server extends Thread {
 
     private ServerView view;
-    protected JogoVelhaServerHandler serverHandler;
+    protected ServerHandler serverHandler;
     protected ClientsHandler clientsHandler;
     private JogoVelha game;
     private JogoVelhaServerDispatcher dispatcher;
@@ -22,7 +22,7 @@ public class Server extends Thread {
         this.game = new JogoVelha();
         this.clientsHandler = new ClientsHandler();
         this.dispatcher = new JogoVelhaServerDispatcher(this.clientsHandler);
-        this.serverHandler = new JogoVelhaServerHandler();
+        this.serverHandler = new ServerHandler();
         this.serverHandler.create(port);
         this.resetElectionManager = new ResetElectionManager();
         this.isRunning = true;
