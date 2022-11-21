@@ -14,9 +14,9 @@ import jogo.lib.JogoVelhaServerMessage;
  */
 public class JogoVelhaServerDispatcher {
 
-    protected JogoVelhaServerClientsHandler clientsHandler;
+    protected ClientsHandler clientsHandler;
 
-    public JogoVelhaServerDispatcher(JogoVelhaServerClientsHandler clientsHandler) {
+    public JogoVelhaServerDispatcher(ClientsHandler clientsHandler) {
         this.clientsHandler = clientsHandler;
     }
 

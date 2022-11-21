@@ -11,7 +11,7 @@ public class Server extends Thread {
 
     private ServerView view;
     protected JogoVelhaServerHandler serverHandler;
-    protected JogoVelhaServerClientsHandler clientsHandler;
+    protected ClientsHandler clientsHandler;
     private JogoVelha game;
     private JogoVelhaServerDispatcher dispatcher;
     protected volatile boolean isRunning;
@@ -20,7 +20,7 @@ public class Server extends Thread {
     public Server(int port, ServerView view) throws IOException {
         this.view = view;
         this.game = new JogoVelha();
-        this.clientsHandler = new JogoVelhaServerClientsHandler();
+        this.clientsHandler = new ClientsHandler();
         this.dispatcher = new JogoVelhaServerDispatcher(this.clientsHandler);
         this.serverHandler = new JogoVelhaServerHandler();
         this.serverHandler.create(port);

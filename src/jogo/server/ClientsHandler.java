@@ -13,11 +13,11 @@ import jogo.lib.ClientMaximumLimitException;
  *
  * @author matheus
  */
-public class JogoVelhaServerClientsHandler {
+public class ClientsHandler {
 
     protected final List<JogoVelhaServerConnection> clients;
 
-    public JogoVelhaServerClientsHandler() {
+    public ClientsHandler() {
         this.clients = new ArrayList<>();
     }
 
