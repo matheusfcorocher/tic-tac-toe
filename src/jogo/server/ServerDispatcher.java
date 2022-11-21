@@ -12,11 +12,11 @@ import jogo.lib.JogoVelhaServerMessage;
  *
  * @author matheus
  */
-public class JogoVelhaServerDispatcher {
+public class ServerDispatcher {
 
     protected ClientsHandler clientsHandler;
 
-    public JogoVelhaServerDispatcher(ClientsHandler clientsHandler) {
+    public ServerDispatcher(ClientsHandler clientsHandler) {
         this.clientsHandler = clientsHandler;
     }
 

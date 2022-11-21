@@ -13,7 +13,7 @@ public class Server extends Thread {
     protected ServerHandler serverHandler;
     protected ClientsHandler clientsHandler;
     private JogoVelha game;
-    private JogoVelhaServerDispatcher dispatcher;
+    private ServerDispatcher dispatcher;
     protected volatile boolean isRunning;
     private ResetElectionManager resetElectionManager;
 
@@ -21,7 +21,7 @@ public class Server extends Thread {
         this.view = view;
         this.game = new JogoVelha();
         this.clientsHandler = new ClientsHandler();
-        this.dispatcher = new JogoVelhaServerDispatcher(this.clientsHandler);
+        this.dispatcher = new ServerDispatcher(this.clientsHandler);
         this.serverHandler = new ServerHandler();
         this.serverHandler.create(port);
         this.resetElectionManager = new ResetElectionManager();
