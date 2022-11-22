@@ -20,16 +20,22 @@ public class Client extends Thread {
         this.isRunning = true;
     }
 
+    private ServerMessage getServerResponse() throws IOException, InterruptedException {
+        this.listener = new ClientListener(this.clientConnection);
+        Thread thread = new Thread(this.listener);
+        thread.start();
+        thread.join(); // waits for thread be resolved
+        ServerMessage response = this.listener.getResponse();
+
+        return response;
+    }
+
     @Override
     public final void run() {
         try {
             while (this.isRunning) {
-                this.listener = new ClientListener(this.clientConnection);
-                Thread thread = new Thread(this.listener);
-                thread.start();
-                thread.join(); // waits for thread be resolved
-                ServerMessage response = this.listener.getResponse();
-                if(response.getShouldDisconnect()) {
+                ServerMessage response = this.getServerResponse();
+                if (response.getShouldDisconnect()) {
                     break;
                 }
                 this.view.updateView(response);
