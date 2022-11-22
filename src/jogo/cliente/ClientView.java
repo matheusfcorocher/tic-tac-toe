@@ -7,9 +7,9 @@ import jogo.cliente.JogoVelhaClient;
 import jogo.lib.ClientMessage;
 import jogo.lib.ServerMessage;
 
-public class JogoVelhaClientView extends javax.swing.JFrame {
+public class ClientView extends javax.swing.JFrame {
 
-    public JogoVelhaClientView() {
+    public ClientView() {
         initComponents();
     }
 
@@ -541,7 +541,7 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(() -> {
-            new JogoVelhaClientView().setVisible(true);
+            new ClientView().setVisible(true);
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

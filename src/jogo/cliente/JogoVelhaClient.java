@@ -7,13 +7,13 @@ import jogo.lib.ServerMessage;
 
 public class JogoVelhaClient extends Thread {
 
-    private final JogoVelhaClientView view;
+    private final ClientView view;
     protected final JogoVelhaClientConnection clientConnection;
     private JogoVelhaClientListener listener;
     public JogoVelhaClientHandler handler;
     private volatile boolean isRunning;
 
-    public JogoVelhaClient(String serverAddress, int serverPort, JogoVelhaClientView view) throws IOException {
+    public JogoVelhaClient(String serverAddress, int serverPort, ClientView view) throws IOException {
         this.view = view;
         this.clientConnection = new JogoVelhaClientConnection(serverAddress, serverPort);
         this.handler = new JogoVelhaClientHandler(this.clientConnection);
