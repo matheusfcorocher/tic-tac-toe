@@ -7,10 +7,10 @@ import jogo.lib.ServerMessage;
 
 public class JogoVelhaClientListener implements Runnable {
 
-    private final JogoVelhaClientConnection clientConnection;
+    private final ClientConnection clientConnection;
     private ServerMessage response;
 
-    public JogoVelhaClientListener(JogoVelhaClientConnection clientConnection) throws IOException {
+    public JogoVelhaClientListener(ClientConnection clientConnection) throws IOException {
         this.clientConnection = clientConnection;
     }
 

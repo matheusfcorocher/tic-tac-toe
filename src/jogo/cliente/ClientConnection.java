@@ -17,14 +17,14 @@ import jogo.lib.ClientMessage;
  *
  * @author matheus
  */
-public class JogoVelhaClientConnection {
+public class ClientConnection {
 
     private Socket socket;
     private PrintWriter output;
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
 
-    public JogoVelhaClientConnection(String serverAddress, int serverPort) throws IOException {
+    public ClientConnection(String serverAddress, int serverPort) throws IOException {
         this.socket = new Socket(serverAddress, serverPort);
         this.socket.setKeepAlive(true);
         this.output = new PrintWriter(this.socket.getOutputStream(), true);
@@ -56,7 +56,7 @@ public class JogoVelhaClientConnection {
         try {
             this.objectOutputStream.writeObject(message);
         } catch (IOException ex) {
-            Logger.getLogger(JogoVelhaClientConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

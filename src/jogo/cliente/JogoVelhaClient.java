@@ -8,14 +8,14 @@ import jogo.lib.ServerMessage;
 public class JogoVelhaClient extends Thread {
 
     private final ClientView view;
-    protected final JogoVelhaClientConnection clientConnection;
+    protected final ClientConnection clientConnection;
     private JogoVelhaClientListener listener;
     public JogoVelhaClientHandler handler;
     private volatile boolean isRunning;
 
     public JogoVelhaClient(String serverAddress, int serverPort, ClientView view) throws IOException {
         this.view = view;
-        this.clientConnection = new JogoVelhaClientConnection(serverAddress, serverPort);
+        this.clientConnection = new ClientConnection(serverAddress, serverPort);
         this.handler = new JogoVelhaClientHandler(this.clientConnection);
         this.isRunning = true;
     }

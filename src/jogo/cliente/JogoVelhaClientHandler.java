@@ -13,9 +13,9 @@ import jogo.lib.ClientMessage;
  */
 public class JogoVelhaClientHandler {
     
-    private final JogoVelhaClientConnection clientConnection;
+    private final ClientConnection clientConnection;
     
-    public JogoVelhaClientHandler(JogoVelhaClientConnection clientConnection) throws IOException {
+    public JogoVelhaClientHandler(ClientConnection clientConnection) throws IOException {
         this.clientConnection = clientConnection;
     }
     
