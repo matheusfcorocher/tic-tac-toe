@@ -10,13 +10,13 @@ public class Client extends Thread {
     private final ClientView view;
     protected final ClientConnection clientConnection;
     private JogoVelhaClientListener listener;
-    public JogoVelhaClientHandler handler;
+    public ClientHandler handler;
     private volatile boolean isRunning;
 
     public Client(String serverAddress, int serverPort, ClientView view) throws IOException {
         this.view = view;
         this.clientConnection = new ClientConnection(serverAddress, serverPort);
-        this.handler = new JogoVelhaClientHandler(this.clientConnection);
+        this.handler = new ClientHandler(this.clientConnection);
         this.isRunning = true;
     }
 

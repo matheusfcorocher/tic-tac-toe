@@ -11,11 +11,11 @@ import jogo.lib.ClientMessage;
  * this class has the purpose to handle all user inputs
  * @author matheus
  */
-public class JogoVelhaClientHandler {
+public class ClientHandler {
     
     private final ClientConnection clientConnection;
     
-    public JogoVelhaClientHandler(ClientConnection clientConnection) throws IOException {
+    public ClientHandler(ClientConnection clientConnection) throws IOException {
         this.clientConnection = clientConnection;
     }
     
