@@ -52,6 +52,16 @@ public class Server extends Thread {
         }
     }
 
+    private ClientMessage getClientRequest(ServerConnection client) throws IOException, InterruptedException {
+        ServerListener serverListener = new ServerListener(client);
+        Thread thread = new Thread(serverListener);
+        thread.start();
+        thread.join(); //waits for thread be resolved
+
+        ClientMessage request = serverListener.getRequest();
+        return request;
+    }
+
     public void startGame(ServerConnection client) {
         new Thread(() -> {
             try {
@@ -63,12 +73,9 @@ public class Server extends Thread {
             }
             try {
                 while (this.isRunning) {
-                    ServerListener serverListener = new ServerListener(client);
-                    Thread thread = new Thread(serverListener);
-                    thread.start();
-                    thread.join(); //waits for thread be resolved
-
-                    ClientMessage request = serverListener.getRequest();
+                    ClientMessage request = this.getClientRequest(client);
+                    
+                    //treatment
                     if (request == null) {
                         break;
                     }
@@ -76,6 +83,7 @@ public class Server extends Thread {
                     int p = this.clientsHandler.getClientPosition(client);
                     boolean wantsReset = request.getWantsReset();
 
+                    //Verify if has any winner to start election
                     if (this.game.isThereAnyWinner(this.game.getWinner())) {
                         this.resetElectionManager.addVote(wantsReset, p);
                         if (this.resetElectionManager.isReadyToCallElection()) {
@@ -112,9 +120,8 @@ public class Server extends Thread {
             }
         }).start();
     }
-    
-    //separate events logic, add disconnect messages in client
 
+    //separate events logic, add disconnect messages in client
     public synchronized void finish() throws Throwable {
         this.finalize();
         this.view.disconnectServer();
