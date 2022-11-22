@@ -5,7 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jogo.lib.ServerMessage;
 
-public class JogoVelhaClient extends Thread {
+public class Client extends Thread {
 
     private final ClientView view;
     protected final ClientConnection clientConnection;
@@ -13,7 +13,7 @@ public class JogoVelhaClient extends Thread {
     public JogoVelhaClientHandler handler;
     private volatile boolean isRunning;
 
-    public JogoVelhaClient(String serverAddress, int serverPort, ClientView view) throws IOException {
+    public Client(String serverAddress, int serverPort, ClientView view) throws IOException {
         this.view = view;
         this.clientConnection = new ClientConnection(serverAddress, serverPort);
         this.handler = new JogoVelhaClientHandler(this.clientConnection);
@@ -36,7 +36,7 @@ public class JogoVelhaClient extends Thread {
             }
             this.view.disconnectClient();
         } catch (IOException ex) {
-            Logger.getLogger(JogoVelhaClient.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();//interrupt listener thread
             return;

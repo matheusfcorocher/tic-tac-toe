@@ -3,7 +3,7 @@ package jogo.cliente;
 import java.awt.Color;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-import jogo.cliente.JogoVelhaClient;
+import jogo.cliente.Client;
 import jogo.lib.ClientMessage;
 import jogo.lib.ServerMessage;
 
@@ -472,7 +472,7 @@ public class ClientView extends javax.swing.JFrame {
         try {
             String server = EIp.getText();
             int porta = Integer.parseInt(EPort.getText());
-            client = new JogoVelhaClient(server, porta, this);
+            client = new Client(server, porta, this);
             client.start();
             BConnect.setEnabled(false);
             BDisconnect.setEnabled(true);
@@ -565,5 +565,5 @@ public class ClientView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
-    private JogoVelhaClient client;
+    private Client client;
 }
