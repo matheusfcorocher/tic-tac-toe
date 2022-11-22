@@ -5,7 +5,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import jogo.cliente.JogoVelhaClient;
 import jogo.lib.ClientMessage;
-import jogo.lib.JogoVelhaServerMessage;
+import jogo.lib.ServerMessage;
 
 public class JogoVelhaClientView extends javax.swing.JFrame {
 
@@ -72,7 +72,7 @@ public class JogoVelhaClientView extends javax.swing.JFrame {
         Q9.setBackground(color);
     }
 
-    public void updateView(JogoVelhaServerMessage response) {
+    public void updateView(ServerMessage response) {
         this.colorizeSquare(1, response.getQ1());
         this.colorizeSquare(2, response.getQ2());
         this.colorizeSquare(3, response.getQ3());

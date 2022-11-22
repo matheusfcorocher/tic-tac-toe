@@ -4,7 +4,7 @@
  */
 package jogo.server;
 
-import jogo.lib.JogoVelhaServerMessage;
+import jogo.lib.ServerMessage;
 
 /**
  *
@@ -32,7 +32,7 @@ public class JogoVelha {
         this.winner = 0;
     }
 
-    public JogoVelhaServerMessage execute(int player, int square) {
+    public ServerMessage execute(int player, int square) {
         if (this.isYourTurn(player) && !this.isGameOver && !this.hasPlayerColor(square)) {
             this.setSquareColor(player, square);
             int winner = findWinner();
@@ -160,8 +160,8 @@ public class JogoVelha {
         return winner != 0;
     }
 
-    protected JogoVelhaServerMessage getGameStatus() {
-        return new JogoVelhaServerMessage(this.turn, this.winner, this.isGameOver, this.q1, this.q2, this.q3,
+    protected ServerMessage getGameStatus() {
+        return new ServerMessage(this.turn, this.winner, this.isGameOver, this.q1, this.q2, this.q3,
                 this.q4, this.q5, this.q6,
                 this.q7, this.q8, this.q9);
     }

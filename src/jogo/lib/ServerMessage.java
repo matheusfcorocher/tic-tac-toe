@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author matheus
  */
-public class JogoVelhaServerMessage implements Serializable {
+public class ServerMessage implements Serializable {
     private int player;
     private int turn;
     private int winner;
@@ -18,7 +18,7 @@ public class JogoVelhaServerMessage implements Serializable {
     private boolean shouldDisconnect;
     private int q1, q2, q3, q4, q5, q6, q7, q8, q9;
 
-    public JogoVelhaServerMessage(int turn, int winner, boolean isGameOver, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9) {
+    public ServerMessage(int turn, int winner, boolean isGameOver, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9) {
         this.turn = turn;
         this.winner = winner;
         this.isGameOver = isGameOver;

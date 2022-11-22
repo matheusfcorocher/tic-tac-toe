@@ -6,7 +6,7 @@ package jogo.server;
 
 import java.io.IOException;
 import java.util.List;
-import jogo.lib.JogoVelhaServerMessage;
+import jogo.lib.ServerMessage;
 
 /**
  *
@@ -20,7 +20,7 @@ public class ServerDispatcher {
         this.clientsHandler = clientsHandler;
     }
 
-    public synchronized void dispatchMessageToAllClients(JogoVelhaServerMessage response) throws IOException {
+    public synchronized void dispatchMessageToAllClients(ServerMessage response) throws IOException {
         List<ServerConnection> clients = clientsHandler.getClients();
         for (ServerConnection cli : clients) {
             this.dispatchMessageToClient(cli, response);
@@ -28,7 +28,7 @@ public class ServerDispatcher {
         System.out.println("Dispatch message to clients");
     }
 
-    public synchronized void dispatchMessageToClient(ServerConnection client, JogoVelhaServerMessage response) throws IOException {
+    public synchronized void dispatchMessageToClient(ServerConnection client, ServerMessage response) throws IOException {
         int p = this.clientsHandler.getClientPosition(client);
         response.setPlayer(p);
         if (client.isSocketNotEmpty() && client.isConnected() && client.isOutputStreamNotEmpty()) {

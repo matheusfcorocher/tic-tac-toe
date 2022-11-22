@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jogo.lib.ClientMessage;
-import jogo.lib.JogoVelhaServerMessage;
+import jogo.lib.ServerMessage;
 
 public class Server extends Thread {
 
@@ -81,7 +81,7 @@ public class Server extends Thread {
                         if (this.resetElectionManager.isReadyToCallElection()) {
                             boolean reset = this.resetElectionManager.callResetElection();
                             this.game = new JogoVelha();
-                            JogoVelhaServerMessage response = this.game.getGameStatus();
+                            ServerMessage response = this.game.getGameStatus();
                             if (reset) {
                                 this.dispatcher.dispatchMessageToAllClients(response);
                             } else {
@@ -92,7 +92,7 @@ public class Server extends Thread {
                             this.resetElectionManager.resetElection();
                         }
                     } else {
-                        JogoVelhaServerMessage response = this.game.execute(p, input);
+                        ServerMessage response = this.game.execute(p, input);
                         this.dispatcher.dispatchMessageToAllClients(response);
                     }
                 }

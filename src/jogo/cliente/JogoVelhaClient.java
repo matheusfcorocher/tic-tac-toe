@@ -3,7 +3,7 @@ package jogo.cliente;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jogo.lib.JogoVelhaServerMessage;
+import jogo.lib.ServerMessage;
 
 public class JogoVelhaClient extends Thread {
 
@@ -28,7 +28,7 @@ public class JogoVelhaClient extends Thread {
                 Thread thread = new Thread(this.listener);
                 thread.start();
                 thread.join(); // waits for thread be resolved
-                JogoVelhaServerMessage response = this.listener.getResponse();
+                ServerMessage response = this.listener.getResponse();
                 if(response.getShouldDisconnect()) {
                     break;
                 }
