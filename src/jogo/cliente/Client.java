@@ -9,7 +9,7 @@ public class Client extends Thread {
 
     private final ClientView view;
     protected final ClientConnection clientConnection;
-    private JogoVelhaClientListener listener;
+    private ClientListener listener;
     public ClientHandler handler;
     private volatile boolean isRunning;
 
@@ -24,7 +24,7 @@ public class Client extends Thread {
     public final void run() {
         try {
             while (this.isRunning) {
-                this.listener = new JogoVelhaClientListener(this.clientConnection);
+                this.listener = new ClientListener(this.clientConnection);
                 Thread thread = new Thread(this.listener);
                 thread.start();
                 thread.join(); // waits for thread be resolved
