@@ -62,6 +62,37 @@ public class Server extends Thread {
         return request;
     }
 
+    private void runPlayerVoteEvent(int player, boolean wantsReset) {
+        if (this.game.isThereAnyWinner(this.game.getWinner())) {
+            this.resetElectionManager.addVote(player, wantsReset);
+        }
+    }
+
+    private boolean runElectionEvent() throws IOException {
+        //call election to reset
+        boolean disconnect = false;
+        if (this.resetElectionManager.isReadyToCallElection()) {
+            boolean reset = this.resetElectionManager.callResetElection();
+            this.resetElectionManager.resetElection();
+
+            this.game = new JogoVelha();
+            ServerMessage response = this.game.getGameStatus();
+            if (!reset) {
+                response.setShouldDisconnect(true);
+                disconnect = true;
+            }
+
+            this.dispatcher.dispatchMessageToAllClients(response);
+        }
+
+        return disconnect;
+    }
+
+    private void runPlayerMoveEvent(int player, ClientMessage request) throws IOException {
+        ServerMessage response = this.game.execute(player, request.getInput());
+        this.dispatcher.dispatchMessageToAllClients(response);
+    }
+
     public void startGame(ServerConnection client) {
         new Thread(() -> {
             try {
@@ -74,34 +105,21 @@ public class Server extends Thread {
             try {
                 while (this.isRunning) {
                     ClientMessage request = this.getClientRequest(client);
-                    
-                    //treatment
+
                     if (request == null) {
                         break;
                     }
-                    int input = request.getInput();
                     int p = this.clientsHandler.getClientPosition(client);
-                    boolean wantsReset = request.getWantsReset();
 
-                    //Verify if has any winner to start election
-                    if (this.game.isThereAnyWinner(this.game.getWinner())) {
-                        this.resetElectionManager.addVote(wantsReset, p);
-                        if (this.resetElectionManager.isReadyToCallElection()) {
-                            boolean reset = this.resetElectionManager.callResetElection();
-                            this.game = new JogoVelha();
-                            ServerMessage response = this.game.getGameStatus();
-                            if (reset) {
-                                this.dispatcher.dispatchMessageToAllClients(response);
-                            } else {
-                                response.setShouldDisconnect(true);
-                                this.dispatcher.dispatchMessageToAllClients(response);
-                                break;
-                            }
-                            this.resetElectionManager.resetElection();
+                    this.runPlayerVoteEvent(p, request.getWantsReset());
+
+                    if (this.resetElectionManager.didPlayerVote(p)) {
+                        boolean disconnect = this.runElectionEvent();
+                        if (disconnect) {
+                            break;
                         }
                     } else {
-                        ServerMessage response = this.game.execute(p, input);
-                        this.dispatcher.dispatchMessageToAllClients(response);
+                        this.runPlayerMoveEvent(p, request);
                     }
                 }
                 this.clientsHandler.remove(client);

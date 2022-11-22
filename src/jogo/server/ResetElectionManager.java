@@ -30,7 +30,7 @@ public class ResetElectionManager {
 
     public void resetElection() {
         for (int i = 0; i < this.resetVotes.size(); i++) {
-            this.resetVotes.set(i,0);
+            this.resetVotes.set(i, 0);
         }
         System.out.println(this.resetVotes);
     }
@@ -39,12 +39,12 @@ public class ResetElectionManager {
         return resetVotes;
     }
 
-    public void addVote(boolean wantsReset, int p) {
+    public void addVote(int player, boolean wantsReset) {
         int vote = 1;
         if (wantsReset) {
             vote = 2;
         }
-        this.resetVotes.set(p-1, vote);
+        this.resetVotes.set(player - 1, vote);
     }
 
     public boolean isReadyToCallElection() {
@@ -68,4 +68,11 @@ public class ResetElectionManager {
         return shouldReset;
     }
 
+    public boolean didPlayerVote(int player) {
+        boolean didPlayerVote = false;
+        if (this.resetVotes.get(player - 1) != 0) {
+            didPlayerVote = true;
+        }
+        return didPlayerVote;
+    }
 }
