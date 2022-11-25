@@ -20,6 +20,10 @@ The main requirement was to used only sockets to make communication with client 
   </dd>
 </dl>
 
+## Preview
+<img src="https://user-images.githubusercontent.com/56937223/204035798-132e5e29-993f-4649-8e79-a66fa29e53c5.png" width="45%"></img> 
+<img src="https://user-images.githubusercontent.com/56937223/204036086-2f4802e1-708a-4943-a3fe-414b1451900b.png" width="45%"></img> 
+
 ## Quick start
 
 0. You must have JDK installed(In this project I used openjdk 19.0.1). I recommend to use <a href="https://sdkman.io/">sdkman</a> for installing your JDK version. 
