@@ -37,7 +37,7 @@ public class JogoVelha {
             this.setSquareColor(player, square);
             int winner = findWinner();
 
-            if (this.isThereAnyWinner(winner)) {
+            if (this.isThereAnyWinner(winner) || this.isAllSquaresFilled()) {
                 this.winner = winner;
                 this.isGameOver = true;
             }
@@ -49,6 +49,14 @@ public class JogoVelha {
         }
 
         return this.getGameStatus();
+    }
+    
+    private boolean isAllSquaresFilled() {
+        return this.q1 != 0 && this.q2 != 0 &&
+               this.q3 != 0 && this.q4 != 0 &&
+               this.q5 != 0 && this.q6 != 0 &&
+               this.q7 != 0 && this.q8 != 0 &&
+               this.q9 != 0;
     }
 
     private boolean isYourTurn(int player) {

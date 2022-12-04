@@ -95,6 +95,10 @@ public class ClientView extends javax.swing.JFrame {
     public void showWinnerMessage(int winner) {
         String message = "O vencedor foi o jogador " + winner;
         String output = message + "(verde)";
+        if(winner == 0) {
+            message = "Houve empate. Nenhum jogador ganhou.";
+            output = message;
+        }
         if (winner == 2) {
             output = message + "(vermelho)";
         }

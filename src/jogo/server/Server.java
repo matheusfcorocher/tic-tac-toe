@@ -63,7 +63,7 @@ public class Server extends Thread {
     }
 
     private void runPlayerVoteEvent(int player, boolean wantsReset) {
-        if (this.game.isThereAnyWinner(this.game.getWinner())) {
+        if (this.game.isGameOver) {
             this.resetElectionManager.addVote(player, wantsReset);
         }
     }
