@@ -95,7 +95,7 @@ public class ClientView extends javax.swing.JFrame {
     public void showWinnerMessage(int winner) {
         String message = "O vencedor foi o jogador " + winner;
         String output = message + "(verde)";
-        if(winner == 0) {
+        if (winner == 0) {
             message = "Houve empate. Nenhum jogador ganhou.";
             output = message;
         }
@@ -118,6 +118,9 @@ public class ClientView extends javax.swing.JFrame {
     }
 
     public void disconnectClient() throws IOException {
+        String output = "Você foi desconectado do Servidor.";
+        JOptionPane.showMessageDialog(this,
+                output, "Aviso", JOptionPane.INFORMATION_MESSAGE);
         client.close();
         BConnect.setEnabled(true);
         BDisconnect.setEnabled(false);
