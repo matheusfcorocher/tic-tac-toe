@@ -16,7 +16,7 @@ public class ServerView extends javax.swing.JFrame {
         jTextField1.setEnabled(true);
         jButton3.setEnabled(false);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,7 +124,13 @@ public class ServerView extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        System.exit(0);
+        try {
+            this.server.finish();
+            this.disconnectServer();
+            System.exit(0);
+        } catch (Throwable t) {
+            System.out.println(t.getMessage());
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
