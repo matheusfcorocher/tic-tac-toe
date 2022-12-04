@@ -141,6 +141,9 @@ public class Server extends Thread {
 
     //separate events logic, add disconnect messages in client
     public synchronized void finish() throws Throwable {
+        ServerMessage response = this.game.getGameStatus();
+        response.setShouldDisconnect(true);
+        this.dispatcher.dispatchMessageToAllClients(response);
         this.finalize();
         this.view.disconnectServer();
     }
