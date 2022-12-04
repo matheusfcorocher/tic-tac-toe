@@ -3,7 +3,6 @@ package jogo.server;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import jogo.lib.ClientMaximumLimitException;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
