@@ -101,8 +101,7 @@ public class ClientView extends javax.swing.JFrame {
         if (winner == 2) {
             output = message + "(vermelho)";
         }
-        JOptionPane.showMessageDialog(this,
-                output, "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        this.showInformationMessage(output);
     }
 
     public int showResetMessage() {
@@ -117,12 +116,16 @@ public class ClientView extends javax.swing.JFrame {
     }
 
     public void disconnectClient() throws IOException {
-        String output = "Você foi desconectado do Servidor.";
-        JOptionPane.showMessageDialog(this,
-                output, "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        String message = "Você foi desconectado do Servidor.";
+        this.showInformationMessage(message);
         client.close();
         BConnect.setEnabled(true);
         BDisconnect.setEnabled(false);
+    }
+    
+    public void showInformationMessage(String message) {
+        JOptionPane.showMessageDialog(this,
+                message, "Aviso", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void showErrorMessage(String message) {
@@ -496,8 +499,7 @@ public class ClientView extends javax.swing.JFrame {
         try {
             this.disconnectClient();
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this,
-                    ex.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            this.showErrorMessage(ex.getMessage());
         }
     }//GEN-LAST:event_BDisconnectActionPerformed
 
