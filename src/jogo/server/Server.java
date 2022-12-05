@@ -33,14 +33,14 @@ public class Server extends Thread {
     public void run() {
         while (this.isRunning) {
             try {
+                Socket clientConnection;
+                clientConnection = this.serverHandler.acceptClient();
                 if (this.clientsHandler.isClientsNotFull()) {
-                    Socket socket;
-                    socket = this.serverHandler.acceptClient();
-                    ServerConnection client = new ServerConnection(socket);
+                    ServerConnection client = new ServerConnection(clientConnection);
                     this.clientsHandler.add(client);
                     this.startGame(client);
                 } else {
-                    this.serverHandler.close(); //server stop listening for new clients
+                    clientConnection.close();
                 }
             } catch (IOException ex) {
                 try {
