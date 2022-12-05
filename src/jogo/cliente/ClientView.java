@@ -3,7 +3,6 @@ package jogo.cliente;
 import java.awt.Color;
 import java.io.IOException;
 import javax.swing.JOptionPane;
-import jogo.cliente.Client;
 import jogo.lib.ClientMessage;
 import jogo.lib.ServerMessage;
 
@@ -124,6 +123,11 @@ public class ClientView extends javax.swing.JFrame {
         client.close();
         BConnect.setEnabled(true);
         BDisconnect.setEnabled(false);
+    }
+
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this,
+                message, "Erro", JOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -484,8 +488,7 @@ public class ClientView extends javax.swing.JFrame {
             BConnect.setEnabled(false);
             BDisconnect.setEnabled(true);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    e.getMessage(), "ERRO", JOptionPane.ERROR_MESSAGE);
+            this.showErrorMessage("Cliente não conseguiu conectar no servidor.");
         }
     }//GEN-LAST:event_BConnectActionPerformed
 
